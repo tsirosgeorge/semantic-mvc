@@ -1,2 +1,13 @@
 # Ignore configuration files
 app/config/config.php
+
+# Ignore other sensitive files
+.env
+
+# Ignore compiled files
+*.log
+*.tmp
+
+# Ignore IDE/editor files
+.vscode/
+.idea/
