@@ -22,7 +22,14 @@ class View
 
             // Replace placeholders in the view content with data
             foreach ($data as $key => $value) {
-                $content = str_replace("{{{$key}}}", htmlspecialchars($value), $content);
+                if (is_array($value) || is_object($value)) {
+                    // Convert arrays and objects to JSON for replacement
+                    $value = json_encode($value);
+                } else {
+                    // Escape string data for HTML contexts
+                    $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+                }
+                $content = str_replace("{{{$key}}}", $value, $content);
             }
         }
 
@@ -35,11 +42,19 @@ class View
 
                 // Replace placeholders in the layout content with data
                 foreach ($data as $key => $value) {
-                    $layoutContent = str_replace("{{{$key}}}", htmlspecialchars($value), $layoutContent);
+                    if (is_array($value) || is_object($value)) {
+                        // Convert arrays and objects to JSON for replacement
+                        $value = json_encode($value);
+                    } else {
+                        // Escape string data for HTML contexts
+                        $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+                    }
+                    $layoutContent = str_replace("{{{$key}}}", $value, $layoutContent);
                 }
 
                 // Replace the {{content}} placeholder in the layout with the view content
                 $layoutContent = str_replace('{{content}}', $content, $layoutContent);
+                $layoutContent = str_replace('{{base_url}}', $_SESSION["BASE_URL"] ?? "", $layoutContent);
 
                 echo $layoutContent;
             } else {

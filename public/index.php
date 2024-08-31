@@ -13,6 +13,8 @@ $routes = [
     // Pages Routes
     ['GET', '/', 'AuthController@showLoginForm'],
     ['GET', '/dashboard', 'DashboardController@index', 'auth'],
+    ['GET', '/dashboard/members', 'DashboardController@members', 'auth'],
+    ['GET', '/dashboard/b2binterest', 'DashboardController@b2binterest', 'auth'],
 
     // API Routes
 
@@ -24,6 +26,8 @@ $routes = [
 
 
     ['GET', '/api/dashboard/data', 'DashboardController@loadData', 'auth'],
+    ['POST', '/api/b2binterest', 'api\B2BInterestController@create', 'auth'],
+    ['PUT', '/api/b2binterest/{id}', 'api\B2BInterestController@update', 'auth']
 ];
 
 $router = new Router($routes);

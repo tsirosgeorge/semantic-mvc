@@ -4,17 +4,26 @@ namespace App\core;
 
 class Auth
 {
+    // Initialize session settings
+    private static function initializeSession()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            // Set session cookie parameters
+            session_set_cookie_params([
+                'lifetime' => SESSION_COOKIE_LIFETIME,
+                'secure' => SESSION_COOKIE_SECURE,
+                'httponly' => SESSION_COOKIE_HTTPONLY,
+                'samesite' => SESSION_COOKIE_SAMESITE
+            ]);
+
+            // Start the session
+            session_start();
+        }
+    }
+
     public static function startSession()
     {
-        // Set session cookie parameters
-        session_set_cookie_params([
-            'lifetime' => SESSION_COOKIE_LIFETIME,
-            'secure' => SESSION_COOKIE_SECURE,
-            'httponly' => SESSION_COOKIE_HTTPONLY,
-            'samesite' => SESSION_COOKIE_SAMESITE
-        ]);
-
-        session_start();
+        self::initializeSession(); // Ensure session is initialized
 
         // Ensure timezone is set
         date_default_timezone_set('Europe/Athens');
@@ -55,6 +64,7 @@ class Auth
         self::startSession(); // Ensure session is started
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['username'];
+        $_SESSION["BASE_URL"] = BASE_URL;
     }
 
     public static function logout()
@@ -63,11 +73,12 @@ class Auth
         session_unset();
         session_destroy();
         header('Location: ' . REDIRECT_AFTER_LOGOUT);
+        exit;
     }
 
     public static function regenerateSessionId()
     {
-        if (session_status() == PHP_SESSION_ACTIVE) {
+        if (session_status() === PHP_SESSION_ACTIVE) {
             session_regenerate_id(true); // Regenerate session ID and delete the old one
         }
     }
