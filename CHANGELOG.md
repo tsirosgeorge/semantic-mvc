@@ -122,6 +122,13 @@ All notable changes to this project will be documented in this file.
 - **Auth Middleware:**
   - Improved middleware to handle session expiration and login redirection properly.
 
+## [1.2.3] - 2024-08-31
+
+### Fixed
+
+- **Data Rendering:**
+  - Added the functionality of rendering data in the views.
+
 ---
 
 **Note:** This CHANGELOG follows the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) principles and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).

@@ -2045,7 +2045,7 @@
                                     <a class="dropdown-item fw-bold text-warning" href="#!"><span>{{username}}</span></a>
 
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="pages/authentication/card/logout.html">Logout</a>
+                                    <a class="dropdown-item" href="/api/logout">Logout</a>
                                 </div>
                             </div>
                         </li>
