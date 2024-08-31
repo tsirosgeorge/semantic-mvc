@@ -72,7 +72,3 @@ This project is licensed under a custom license agreement. The full terms of the
 ## Changelog
 
 All notable changes to this project will be documented in the [CHANGELOG.md](CHANGELOG.md) file.
-
-```
-
-```
