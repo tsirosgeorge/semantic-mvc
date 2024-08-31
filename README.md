@@ -63,8 +63,7 @@ In this example:
 - Routes with the `api/` prefix are designated for API requests.
 - To protect a route, add `'auth'` as the third parameter. This indicates that the route requires authentication.
 
-
-
+```
 
 ## License
 
@@ -73,4 +72,7 @@ This project is licensed under a custom license agreement. The full terms of the
 ## Changelog
 
 All notable changes to this project will be documented in the [CHANGELOG.md](CHANGELOG.md) file.
+
+```
+
 ```
