@@ -1,0 +1,19 @@
+{
+	"name": "tsirosgeorge/semantic",
+	"description": "A simple PHP framework",
+	"type": "project",
+	"autoload": {
+		"psr-4": {
+			"App\\": "app/"
+		}
+	},
+	"authors": [
+		{
+			"name": "George Tsiros",
+			"email": "tsirosgeorge@pm.me"
+		}
+	],
+	"require": {
+		"nikic/fast-route": "^1.3"
+	}
+}
