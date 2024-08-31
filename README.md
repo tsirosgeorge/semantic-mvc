@@ -10,4 +10,4 @@
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under a custom license agreement. The full terms of the license can be found in the [LICENSE](LICENSE) file.
