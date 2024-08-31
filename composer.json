@@ -1,6 +1,6 @@
 {
 	"name": "tsirosgeorge/semantic",
-	"description": "A simple PHP framework",
+	"description": "A simple PHP framework for building web applications.",
 	"type": "project",
 	"autoload": {
 		"psr-4": {
