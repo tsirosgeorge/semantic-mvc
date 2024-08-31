@@ -16,4 +16,4 @@ This project is licensed under a custom license agreement. The full terms of the
 
 ## Changelog
 
-All notable changes to this project will be documented in the [CHANGELOG].md file.
+All notable changes to this project will be documented in the [CHANGELOG][CHANGELOG] file.
