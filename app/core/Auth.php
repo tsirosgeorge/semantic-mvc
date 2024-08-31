@@ -62,7 +62,7 @@ class Auth
         self::startSession(); // Ensure session is started
         session_unset();
         session_destroy();
-        header('Location: /');
+        header('Location: ' . REDIRECT_AFTER_LOGOUT);
     }
 
     public static function regenerateSessionId()

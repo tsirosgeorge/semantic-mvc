@@ -40,7 +40,7 @@ class Router
 
         // Redirect if the user is logged in and trying to access guest routes
         if ($isLoggedIn && in_array($uri, $this->guestRoutes)) {
-            header('Location: /dashboard');
+            header('Location: ' . REDIRECT_AFTER_LOGIN);
             exit;
         }
 
