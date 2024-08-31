@@ -1,25 +1,29 @@
 <?php
 
-/*
- * This file is part of the Semantic MVC Framework.
- *
- * (c) George Tsiros <tsirosgeorge@pm.me>
- *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- */
-
 require_once '../vendor/autoload.php';
 require_once '../app/config/config.php';
 
 use App\core\Router;
 
+
+$_POST = json_decode(file_get_contents('php://input'), true);
+
+// Define your routes with an optional authentication flag
 $routes = [
-    ['GET', '/', 'LoginController@showLoginForm'],
-    ['POST', '/login', 'LoginController@login'],
-    ['GET', '/logout', 'LoginController@logout'],
-    ['GET', '/dashboard', 'DashboardController@index'],
-    ['GET', '/dashboard/data', 'DashboardController@loadData'],
+    // Pages Routes
+    ['GET', '/', 'AuthController@showLoginForm'],
+    ['GET', '/dashboard', 'DashboardController@index', 'auth'],
+
+    // API Routes
+
+    //Auth Routes
+    ['GET', '/api/logout', 'AuthController@logout'],
+    ['POST', '/api/login', 'AuthController@login'],
+    ['POST', '/api/register', 'AuthController@register'],
+    ['GET', '/api/refresh-session', 'AuthController@refreshSession'],
+
+
+    ['GET', '/api/dashboard/data', 'DashboardController@loadData', 'auth'],
 ];
 
 $router = new Router($routes);

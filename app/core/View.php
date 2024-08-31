@@ -13,6 +13,7 @@ class View
      */
     public static function render($view, $data = [], $layout = null)
     {
+
         $viewPath = __DIR__ . "/../Views/{$view}.html";
 
         if (file_exists($viewPath)) {

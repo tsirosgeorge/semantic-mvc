@@ -16,6 +16,6 @@ class DashboardController extends Controller
         $data = ['username' => $_SESSION['user_name'], 'title' => 'Dashboard Home'];
 
         // Render the HTML view with the layout
-        View::render('dashboard', $data, 'layouts/layouts');
+        View::render('dashboard', $data, 'main');
     }
 }

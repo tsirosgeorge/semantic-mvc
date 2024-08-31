@@ -11,3 +11,10 @@ app/config/config.php
 # Ignore IDE/editor files
 .vscode/
 .idea/
+
+
+# Ignore image files
+public/assets/img/
+
+# Ignore composer files
+vendor/
