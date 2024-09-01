@@ -17,3 +17,7 @@ define('SESSION_COOKIE_SAMESITE', ''); // SameSite attribute Strict, Lax, None
 
 // Set default timezone
 date_default_timezone_set('Europe/Athens');
+
+// Redirect pages after login
+define('REDIRECT_AFTER_LOGIN', '/dashboard');
+define('REDIRECT_AFTER_LOGOUT', '/');

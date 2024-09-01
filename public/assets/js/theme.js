@@ -882,7 +882,7 @@ var advanceAjaxTableInit = function advanceAjaxTableInit() {
   var table = document.getElementById('advanceAjaxTable');
   if (table) {
     var options = {
-      page: 10,
+      page: 50,
       pagination: {
         item: "<li><button class='page' type='button'></button></li>"
       },

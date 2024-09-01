@@ -1,47 +1,30 @@
-CUSTOM LICENSE AGREEMENT
+MIT License
 
-This Custom License Agreement ("Agreement") is made and entered into by and between:
+Copyright (c) 2024 George Tsiros
 
-**Licensor:**  
-SEMANTIC SOFTWARE E.E.  
-KENTRIKIS 148, VEROIA, 59132, GREECE  
-Email: info@semantic.gr
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-**Licensee:**  
-GEORGE TSIROS  
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Licensor:
+George Tsiros
 Email: tsirosgeorge@pm.me
 
-1. **Grant of License**
-   Licensor grants Licensee a non-exclusive, non-transferable license to use, modify, and distribute the software named "Semantic MVC Framework" ("Software") solely for internal use within Licensee's organization.
+Signed:
 
-2. **Restrictions**
-
-   - The Software may only be used by GEORGE TSIROS and his affiliates.
-   - Redistribution or transfer of the Software to third parties is prohibited.
-   - The Software may not be used for commercial purposes outside of Licensee’s organization.
-
-3. **Ownership**
-   All rights, title, and interest in and to the Software, including any modifications or derivative works, remain with Licensor.
-
-4. **Warranty and Liability**
-
-   - The Software is provided "as is," without warranty of any kind. Licensor disclaims all warranties, express or implied.
-   - Licensor shall not be liable for any damages arising from the use of the Software.
-
-5. **Termination**
-   This license may be terminated by Licensor if Licensee fails to comply with any terms of this Agreement. Upon termination, Licensee must cease all use of the Software and destroy all copies.
-
-6. **Contact Information**
-   For any questions regarding this Agreement, please contact:
-   Licensor: SEMANTIC SOFTWARE E.E.  
-   Email: info@semantic.gr
-
-**Signed:**
-
-Licensor: ************\_\_\_************  
-Name: SEMANTIC SOFTWARE E.E.  
-Date: August 31, 2024
-
-Licensee: ************\_\_\_************  
-Name: GEORGE TSIROS  
+Licensor: __________________________
+Name: George Tsiros
 Date: August 31, 2024

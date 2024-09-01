@@ -13,7 +13,7 @@
 			"email": "tsirosgeorge@pm.me"
 		}
 	],
-	"license": "proprietary",
+	"license": "mit",
 	"require": {
 		"nikic/fast-route": "^1.3"
 	}

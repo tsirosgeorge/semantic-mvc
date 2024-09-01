@@ -5,26 +5,36 @@ require_once '../app/config/config.php';
 
 use App\core\Router;
 
-
 $_POST = json_decode(file_get_contents('php://input'), true);
 
-// Define your routes with an optional authentication flag
-$routes = [
-    // Pages Routes
-    ['GET', '/', 'AuthController@showLoginForm'],
-    ['GET', '/dashboard', 'DashboardController@index', 'auth'],
+$router = new Router();
 
-    // API Routes
+// Define your routes with grouping
 
-    //Auth Routes
-    ['GET', '/api/logout', 'AuthController@logout'],
-    ['POST', '/api/login', 'AuthController@login'],
-    ['POST', '/api/register', 'AuthController@register'],
-    ['GET', '/api/refresh-session', 'AuthController@refreshSession'],
+// Group for Pages Routes
+$router->group([], function ($router) {
+    $router->addRoute('GET', '/', 'AuthController@showLoginForm');
 
+    $router->group(['middleware' => 'auth'], function ($router) {
+        $router->addRoute('GET', '/dashboard', 'DashboardController@index');
+        $router->addRoute('GET', '/dashboard/members', 'DashboardController@members');
+        $router->addRoute('GET', '/dashboard/b2binterest', 'DashboardController@b2binterest');
+    });
+});
 
-    ['GET', '/api/dashboard/data', 'DashboardController@loadData', 'auth'],
-];
+// Group for API Routes
+$router->group(['prefix' => '/api'], function ($router) {
+    // Auth Routes
+    $router->addRoute('GET', '/logout', 'AuthController@logout');
+    $router->addRoute('POST', '/login', 'AuthController@login');
+    $router->addRoute('POST', '/register', 'AuthController@register');
+    $router->addRoute('GET', '/refresh-session', 'AuthController@refreshSession');
 
-$router = new Router($routes);
+    $router->group(['middleware' => 'auth'], function ($router) {
+        $router->addRoute('GET', '/dashboard/data', 'DashboardController@loadData');
+        $router->addRoute('POST', '/b2binterest', 'api\B2BInterestController@create');
+        $router->addRoute('PUT', '/b2binterest/{id}', 'api\B2BInterestController@update');
+    });
+});
+
 $router->dispatch();

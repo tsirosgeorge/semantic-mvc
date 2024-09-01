@@ -1,0 +1,55 @@
+<div class="card">
+	<div class="card-header border-bottom">
+		<div class="row flex-between-end">
+			<div class="col-auto align-self-center">
+				<h5 class="mb-0" data-anchor="data-anchor">Members</h5>
+			</div>
+			<div class="row justify-content-end">
+				<div class="col-auto">
+					<select class="form-select form-select-sm mb-3" aria-label="Bulk actions" id="filterMembersStatus">
+						<option selected="" value="0">Επιλέξτε status</option>
+						<option value="1">Qualified</option>
+						<option value="2">Unqualified</option>
+						<option value="3">No Answer</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card-body pt-0">
+		<div class="tab-content">
+			<div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-91a79ee3-304a-434e-81a8-a636e932754f" id="dom-91a79ee3-304a-434e-81a8-a636e932754f">
+				<div class="">
+					<div class="table-responsive scrollbar mb-3">
+						<table id="membersTable" class="table table-md fs-10 mb-0 overflow-hidden">
+							<thead class="">
+								<tr>
+									<th class="align-middle white-space-nowrap text-start">Ημ/νία</th>
+									<th class="align-middle white-space-nowrap text-start">Προσωπικά Στοιχεία</th>
+									<th class="align-middle white-space-nowrap text-start">Καμπάνια</th>
+									<th class="align-middle white-space-nowrap text-start">Επιλογή</th>
+									<th class="align-middle white-space-nowrap text-end">Ενέργειες</th>
+								</tr>
+							</thead>
+							<tbody class=""></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="{{base_url}}assets/js/scripts/tables.js"></script>
+
+<script>
+	// let data = "{{members}}";
+	// initiateCustomTable(membersTable, data);
+</script>
+
+<style>
+	.dataTables_wrapper .dt-buttons {
+		float: none;
+		text-align: center;
+	}
+</style>
