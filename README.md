@@ -44,7 +44,7 @@ Here is an example of how routes are defined in `public/index.php`:
 
 To add protected routes, simply include `'auth'` as the last parameter in the route definition.
 
-You can also use group routing with prefixes
+You can also use gropu routing with prefixes
 
 ```php
 router->group([], function ($router) {

@@ -1,17 +1,24 @@
 <?php
 
 require_once '../vendor/autoload.php';
-// require_once '../app/config/config.php';
+require_once '../app/config/config.php';
+
+
 
 use App\core\Router;
 use Tracy\Debugger;
+use Dotenv\Dotenv;
+
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
 
 Debugger::enable();
 debugger::$showBar = false;
-Debugger::$strictMode = true; // display all errors
+Debugger::$strictMode = true;
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
+
 
 $_POST = json_decode(file_get_contents('php://input'), true);
 
@@ -44,6 +51,11 @@ $router->group(['prefix' => '/api'], function ($router) {
         $router->addRoute('POST', '/b2binterest', 'api\B2BInterestController@create');
         $router->addRoute('PUT', '/b2binterest/{id}', 'api\B2BInterestController@update');
     });
+});
+
+
+$router->group(['prefix' => '/check'], function ($router) {
+    $router->addRoute('GET', '/test', 'CheckController@test');
 });
 
 $router->dispatch();

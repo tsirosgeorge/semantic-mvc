@@ -11,11 +11,11 @@ class Database
     public function __construct()
     {
         // Fetch database configuration from environment variables
-        $host = getenv('DB_HOST');
-        $user = getenv('DB_USER');
-        $pass = getenv('DB_PASS');
-        $name = getenv('DB_NAME');
-        $port = getenv('DB_PORT');
+        $host = $_ENV['DB_HOST'];
+        $user = $_ENV['DB_USER'];
+        $pass = $_ENV['DB_PASS'];
+        $name = $_ENV['DB_NAME'];
+        $port = $_ENV['DB_PORT'];
 
         // Initialize MySQL connection
         $this->conn = new mysqli($host, $user, $pass, $name, $port);
@@ -41,11 +41,11 @@ class Database
     {
         // Gather detailed information
         $config = [
-            'DB_HOST' => getenv('DB_HOST'),
-            'DB_USER' => getenv('DB_USER'),
+            'DB_HOST' => $_ENV['DB_HOST'],
+            'DB_USER' => $_ENV['DB_USER'],
             'DB_PASS' => '******', // Masking password for security
-            'DB_NAME' => getenv('DB_NAME'),
-            'DB_PORT' => getenv('DB_PORT')
+            'DB_NAME' => $_ENV['DB_NAME'],
+            'DB_PORT' => $_ENV['DB_PORT']
         ];
 
         // Output the error message and configuration details in the browser

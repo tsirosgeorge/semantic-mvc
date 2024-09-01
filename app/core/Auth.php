@@ -10,10 +10,10 @@ class Auth
         if (session_status() === PHP_SESSION_NONE) {
             // Set session cookie parameters
             session_set_cookie_params([
-                'lifetime' => (int)getenv('SESSION_COOKIE_LIFETIME'),
-                'secure' => (bool)getenv('SESSION_COOKIE_SECURE'),
-                'httponly' => (bool)getenv('SESSION_COOKIE_HTTPONLY'),
-                'samesite' => getenv('SESSION_COOKIE_SAMESITE')
+                'lifetime' => (int)$_ENV['SESSION_COOKIE_LIFETIME'],
+                'secure' => (bool)$_ENV['SESSION_COOKIE_SECURE'],
+                'httponly' => (bool)$_ENV['SESSION_COOKIE_HTTPONLY'],
+                'samesite' => $_ENV['SESSION_COOKIE_SAMESITE']
             ]);
 
             // Start the session
@@ -26,10 +26,10 @@ class Auth
         self::initializeSession(); // Ensure session is initialized
 
         // Ensure timezone is set
-        date_default_timezone_set('Europe/Athens');
+        date_default_timezone_set($_ENV['TIMEZONE']);
 
         // Check if session is expired
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > (int)getenv('SESSION_TIMEOUT')) {
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > (int)$_ENV['SESSION_TIMEOUT']) {
             // Session has expired
             self::logout(); // Optionally log the user out or handle the expired session
         }
@@ -64,7 +64,7 @@ class Auth
         self::startSession(); // Ensure session is started
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['username'];
-        $_SESSION["BASE_URL"] = getenv('BASE_URL');
+        $_SESSION["BASE_URL"] = $_ENV['BASE_URL'];
     }
 
     public static function logout()
@@ -72,7 +72,7 @@ class Auth
         self::startSession(); // Ensure session is started
         session_unset();
         session_destroy();
-        header('Location: ' . getenv('REDIRECT_AFTER_LOGOUT'));
+        header('Location: ' . $_ENV['REDIRECT_AFTER_LOGOUT']);
         exit;
     }
 
@@ -86,7 +86,7 @@ class Auth
     public static function getRemainingSessionTime()
     {
         if (isset($_SESSION['LAST_ACTIVITY'])) {
-            $expirationTime = $_SESSION['LAST_ACTIVITY'] + (int)getenv('SESSION_TIMEOUT');
+            $expirationTime = $_SESSION['LAST_ACTIVITY'] + (int)$_ENV['SESSION_TIMEOUT'];
             $remainingTime = $expirationTime - time();
             return $remainingTime > 0 ? $remainingTime : 0; // Return remaining time in seconds or 0 if expired
         }
