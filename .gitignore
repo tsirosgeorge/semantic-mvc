@@ -18,3 +18,6 @@ public/assets/img/
 
 # Ignore composer files
 vendor/
+
+.DS_Store
+
