@@ -69,11 +69,11 @@ class Router
         $uri = rawurldecode($uri);
 
         // Check if the user is logged in
-        $isLoggedIn = Auth::checkIfLoggedIn(); // Add this method to check if the user is logged in
+        $isLoggedIn = Auth::checkIfLoggedIn();
 
         // Redirect if the user is logged in and trying to access guest routes
         if ($isLoggedIn && in_array($uri, $this->guestRoutes)) {
-            header('Location: ' . REDIRECT_AFTER_LOGIN);
+            header('Location: ' . getenv('REDIRECT_AFTER_LOGIN')); // Use getenv for environment variables
             exit;
         }
 
@@ -95,7 +95,7 @@ class Router
 
                 // Check if the route requires authentication
                 if (in_array($uri, $this->authRoutes)) {
-                    Auth::check(); // This could also redirect if not authenticated
+                    Auth::check(); // Ensure authentication is enforced
                 }
 
                 list($controller, $method) = explode('@', $handler);

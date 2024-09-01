@@ -1,9 +1,12 @@
 <?php
 
 require_once '../vendor/autoload.php';
-require_once '../app/config/config.php';
+// require_once '../app/config/config.php';
 
 use App\core\Router;
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
 $_POST = json_decode(file_get_contents('php://input'), true);
 
