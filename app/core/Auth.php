@@ -26,7 +26,7 @@ class Auth
         self::initializeSession(); // Ensure session is initialized
 
         // Ensure timezone is set
-        date_default_timezone_set(getenv('TIMEZONE'));
+        date_default_timezone_set('Europe/Athens');
 
         // Check if session is expired
         if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > (int)getenv('SESSION_TIMEOUT')) {
