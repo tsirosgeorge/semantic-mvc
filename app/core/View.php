@@ -25,6 +25,15 @@ class View
                 if ($key === 'scripts' && is_array($value)) {
                     $scriptsHtml = implode("\n", $value);
                     $content = str_replace("{{{$key}}}", $scriptsHtml, $content);
+                } elseif ($key === 'modals' && is_array($value)) {
+                    $modalsHtml = '';
+                    foreach ($value as $modal) {
+                        $modalPath = __DIR__ . "/../Views/{$modal}.html";
+                        if (file_exists($modalPath)) {
+                            $modalsHtml .= file_get_contents($modalPath);
+                        }
+                    }
+                    $content = str_replace("{{{$key}}}", $modalsHtml, $content);
                 } else {
                     $content = str_replace("{{{$key}}}", htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), $content);
                 }
@@ -43,6 +52,15 @@ class View
                     if ($key === 'scripts' && is_array($value)) {
                         $scriptsHtml = implode("\n", $value);
                         $layoutContent = str_replace("{{{$key}}}", $scriptsHtml, $layoutContent);
+                    } elseif ($key === 'modals' && is_array($value)) {
+                        $modalsHtml = '';
+                        foreach ($value as $modal) {
+                            $modalPath = __DIR__ . "/../Views/{$modal}.html";
+                            if (file_exists($modalPath)) {
+                                $modalsHtml .= file_get_contents($modalPath);
+                            }
+                        }
+                        $layoutContent = str_replace("{{{$key}}}", $modalsHtml, $layoutContent);
                     } else {
                         $layoutContent = str_replace("{{{$key}}}", htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), $layoutContent);
                     }
@@ -51,6 +69,7 @@ class View
                 // Replace the {{content}} placeholder in the layout with the view content
                 $layoutContent = str_replace('{{content}}', $content, $layoutContent);
                 $layoutContent = str_replace('{{base_url}}', $_SESSION["BASE_URL"] ?? "", $layoutContent);
+                $layoutContent = str_replace('{{api_url}}', $_SESSION["API_URL"] ?? "", $layoutContent);
 
                 echo $layoutContent;
             } else {

@@ -22,17 +22,17 @@ class AuthController extends Controller
         $_POST = json_decode(file_get_contents('php://input'), true);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'];
+            $email = $_POST['email'];
             $password = $_POST['password'];
 
             $userModel = new UserModel();
-            $user = $userModel->getUserByUsername($username);
+            $user = $userModel->getUserByEmail($email);
 
             if ($user && PasswordUtils::verifyPassword($password, $user[0]['decrypted_password'])) {
                 Auth::login($user[0]);
-                $this->jsonResponse(['success' => true, 'message' => 'Login successful']);
+                $this->jsonResponse(['success' => true, 'message' => 'Login successful', 'role' => $user[0]['role']]);
             } else {
-                $this->jsonResponse(['success' => false, 'message' => 'Invalid credentials', 'data' => $user]);
+                $this->jsonResponse(['success' => false, 'message' => 'Μη έγκυρα στοιχεία', 'data' => $user]);
             }
         }
     }
@@ -43,11 +43,11 @@ class AuthController extends Controller
         $_POST = json_decode(file_get_contents('php://input'), true);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'];
+            $email = $_POST['email'];
             $password = $_POST['password'];
 
             $userModel = new UserModel();
-            $user = $userModel->createUser($username, $password);
+            $user = $userModel->createUser($email, $password);
 
             if ($user) {
                 $this->jsonResponse(['success' => true, 'message' => 'Register successful']);
@@ -76,5 +76,12 @@ class AuthController extends Controller
         // Respond with a success message or JSON response
         header('Content-Type: application/json');
         echo json_encode(['status' => 'success', 'message' => 'Session refreshed.']);
+    }
+
+    public function adminAction()
+    {
+        Auth::authorize('admin_access');
+        // Some admin logic
+        echo json_encode(['status' => 'success', 'message' => 'You have access to this admin function.']);
     }
 }

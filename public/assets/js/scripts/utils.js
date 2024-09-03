@@ -1,24 +1,3 @@
-function jsonEncode(data) {
-	const decodedData = data
-		.replace(/&quot;/g, '"')
-		.replace(/&amp;/g, "&")
-		.replace(/\n/g, "")
-		.replace(/&lt;/g, "<")
-		.replace(/&gt;/g, ">")
-		.replace(/<br>/g, " ");
-
-	const contactsData = JSON.parse(JSON.stringify(decodedData));
-	return JSON.parse(contactsData);
-}
-
-function initiateCustomTable(customTable, data) {
-	let encodedData = JSON.stringify(data);
-	if (encodedData) {
-		allData = encodedData; // Save the contacts data globally
-		customTable(encodedData);
-	}
-}
-
 function getDate(dateTime) {
 	const date = new Date(dateTime);
 	const day = date.getDate().toString().padStart(2, "0");
@@ -32,50 +11,44 @@ function getTime(dateTime) {
 	return date.toLocaleTimeString();
 }
 
-/**
- * Parses a JSON string and decodes any nested JSON strings.
- *
- * @param {string} jsonString - The JSON string to parse.
- * @returns {Object|Array|null} - The parsed JavaScript object or array, or null if parsing fails.
- */
-function parseJSONWithNested(jsonString) {
-	let data;
+// Helper functions
+function truncateString(str, maxLength) {
+	return str.length > maxLength ? str.substring(0, maxLength) + "..." : str;
+}
 
-	try {
-		// Parse the main JSON string
-		data = JSON.parse(jsonString);
-	} catch (error) {
-		console.error("Error parsing main JSON:", error);
-		return null;
+function formatDateWithoutTime(dateString) {
+	if (!dateString) return "";
+	const date = new Date(dateString);
+	return date.toLocaleDateString(); // Adjust as needed
+}
+
+toastr.options = {
+	closeButton: false,
+	debug: false,
+	newestOnTop: true,
+	progressBar: true,
+	positionClass: "toast-top-right",
+	preventDuplicates: false,
+	onclick: null,
+	showDuration: "300",
+	hideDuration: "1000",
+	timeOut: "5000",
+	extendedTimeOut: "1000",
+	showEasing: "swing",
+	hideEasing: "linear",
+	showMethod: "fadeIn",
+	hideMethod: "fadeOut",
+};
+
+function formatDate(date) {
+	var day = date.getDate();
+	var month = date.getMonth() + 1;
+	var year = date.getFullYear();
+	if (day < 10) {
+		day = "0" + day;
 	}
-
-	// Recursively parse nested JSON strings
-	function parseNestedJSON(obj) {
-		if (Array.isArray(obj)) {
-			obj.forEach((item) => parseNestedJSON(item));
-		} else if (obj && typeof obj === "object") {
-			Object.keys(obj).forEach((key) => {
-				if (typeof obj[key] === "string") {
-					try {
-						// Attempt to parse the string as JSON
-						const parsed = JSON.parse(obj[key]);
-						// If parsing succeeds, replace the string with the parsed object
-						if (parsed && typeof parsed === "object") {
-							obj[key] = parsed;
-						}
-					} catch (e) {
-						// If parsing fails, leave the original string
-						// Optionally log the error
-					}
-				} else if (typeof obj[key] === "object" && obj[key] !== null) {
-					// Recursively parse nested objects and arrays
-					parseNestedJSON(obj[key]);
-				}
-			});
-		}
+	if (month < 10) {
+		month = "0" + month;
 	}
-
-	parseNestedJSON(data);
-
-	return data;
+	return day + "/" + month + "/" + year;
 }

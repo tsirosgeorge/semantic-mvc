@@ -2,6 +2,8 @@
 
 namespace App\core;
 
+use App\Models\UserModel;
+
 class Auth
 {
     // Initialize session settings
@@ -61,11 +63,22 @@ class Auth
 
     public static function login($user)
     {
-        self::startSession(); // Ensure session is started
+        self::startSession();
         $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_name'] = $user['username'];
-        $_SESSION["BASE_URL"] = $_ENV['BASE_URL'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['BASE_URL'] = $_ENV['BASE_URL'];
+        $_SESSION['API_URL'] = $_ENV['API_URL'];
+
+        $userModel = new UserModel();
+        $roles = $userModel->getUserRoles($user['id']);
+        $_SESSION['user_roles'] = $roles; // Ensure roles are correctly assigned
+
+        $permissions = $userModel->getUserPermissions($user['id']);
+        $_SESSION['user_permissions'] = array_unique(array_column($permissions, 'name')); // Ensure no duplicates
     }
+
+
+
 
     public static function logout()
     {
@@ -91,5 +104,57 @@ class Auth
             return $remainingTime > 0 ? $remainingTime : 0; // Return remaining time in seconds or 0 if expired
         }
         return 0; // No session activity yet
+    }
+
+    public static function userRoles()
+    {
+        self::startSession();
+        if (isset($_SESSION['user_id'])) {
+            $userModel = new UserModel();
+            return $userModel->getUserRoles($_SESSION['user_id']);
+        }
+        return [];
+    }
+
+    public static function userPermissions()
+    {
+        self::startSession();
+        if (isset($_SESSION['user_id'])) {
+            $userModel = new UserModel();
+            return $userModel->getUserPermissions($_SESSION['user_id']);
+        }
+        return [];
+    }
+
+    public static function hasRole($role)
+    {
+        self::startSession();
+        return isset($_SESSION['user_roles']) && in_array($role, array_column($_SESSION['user_roles'], 'name'));
+    }
+
+
+    public static function hasPermission($permission)
+    {
+        self::startSession();
+        return in_array($permission, $_SESSION['user_permissions']);
+    }
+
+
+    public static function setPermissions($permissions)
+    {
+        self::startSession();
+        $_SESSION['permissions'] = $permissions;
+    }
+
+
+    public static function authorize($permission)
+    {
+        self::startSession();
+
+        if (!self::hasPermission($permission)) {
+            header('HTTP/1.1 403 Forbidden');
+            echo json_encode(['status' => 'error', 'message' => 'Forbidden']);
+            exit;
+        }
     }
 }

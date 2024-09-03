@@ -1,0 +1,48 @@
+<div class="card">
+	<div class="card-header border-bottom">
+		<div class="row flex-between-end">
+			<div class="col-auto align-self-center">
+				<h5 class="mb-0" data-anchor="data-anchor">Όλοι οι πελάτες</h5>
+			</div>
+			<div class="row justify-content-end">
+				<div class="col-auto">
+					<label for="filterRfullname">Filter by Reseller Name:</label>
+					<select class="form-select form-select-sm mb-3" id="filterRfullname">
+						<option value="">All</option>
+						<!-- Options will be populated dynamically -->
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card-body pt-0">
+		<div class="tab-content">
+			<div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-91a79ee3-304a-434e-81a8-a636e932754f" id="dom-91a79ee3-304a-434e-81a8-a636e932754f">
+				<div class="">
+					<div class="table-responsive scrollbar mb-3">
+						<table id="customersTable" class="table table-md fs-10 mb-0 overflow-hidden">
+							<thead class="">
+								<tr>
+									<th class="align-middle white-space-nowrap text-start">ΑΦΜ</th>
+									<th class="align-middle white-space-nowrap text-start">Επωνυμία</th>
+									<th class="align-middle white-space-nowrap text-start">Μεταπωλητής</th>
+									<th class="align-middle white-space-nowrap text-start">Ημ/νία</th>
+									<th class="align-middle white-space-nowrap text-end">Ενέργεια</th>
+								</tr>
+							</thead>
+							<tbody id="customersBody" class=""></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{{modals}}
+
+<script>
+	let apiUrl = "{{api_url}}";
+</script>
+
+{{scripts}}

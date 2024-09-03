@@ -13,8 +13,8 @@ class DashboardController extends Controller
     {
         Auth::check();
         $data = [
-            'username' => $_SESSION['user_name'],
-            'firstTwoLetters' => GeneralUtils::getInitials($_SESSION['user_name']),
+            'username' => $_SESSION['email'],
+            'firstTwoLetters' => GeneralUtils::getInitials($_SESSION['email']),
             'title' => 'Contacts',
             'base_url' => $_SESSION['BASE_URL'],
             'scripts' => [
@@ -29,8 +29,8 @@ class DashboardController extends Controller
     {
         Auth::check();
         $data = [
-            'username' => $_SESSION['user_name'],
-            'firstTwoLetters' => GeneralUtils::getInitials($_SESSION['user_name']),
+            'username' => $_SESSION['email'],
+            'firstTwoLetters' => GeneralUtils::getInitials($_SESSION['email']),
             'title' => 'Members',
             'base_url' => $_SESSION['BASE_URL'],
             'currentPage' => 'members'
@@ -42,8 +42,8 @@ class DashboardController extends Controller
     {
         Auth::check();
         $data = [
-            'username' => $_SESSION['user_name'],
-            'firstTwoLetters' => GeneralUtils::getInitials($_SESSION['user_name']),
+            'username' => $_SESSION['email'],
+            'firstTwoLetters' => GeneralUtils::getInitials($_SESSION['email']),
             'title' => 'B2B Interest',
             'base_url' => $_SESSION['BASE_URL'],
             'currentPage' => 'b2binterest'

@@ -1,0 +1,48 @@
+<div class="row g-3 mb-3">
+	<div class="card mb-3">
+		<div class="card-header border-bottom">
+			<div class="row flex-between-end">
+				<div class="col-auto flex-lg-grow-1 flex-lg-basis-0 align-self-center">
+					<h5 class="mb-0">Πελάτες με υπογεγραμμένη σύμβαση</h5>
+				</div>
+				<div class="row justify-content-end">
+					<div class="col-auto">
+						<label for="filterRfullname">Filter by Reseller Name:</label>
+						<select class="form-select form-select-sm mb-3" id="filterRfullname">
+							<option value="">All</option>
+							<!-- Options will be populated dynamically -->
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-body pt-0">
+			<div class="tab-content">
+				<div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-9e80409e-49e0-4986-9fcb-16b9838d0cff" id="dom-9e80409e-49e0-4986-9fcb-16b9838d0cff">
+					<div class="table-responsive scrollbar">
+						<table id="customersTable" class="table table-hover overflow-hidden">
+							<thead>
+								<tr>
+									<th scope="col">ΑΦΜ</th>
+									<th scope="col">ΕΠΩΝΥΜΙΑ</th>
+									<th scope="col">ΜΕΤΑΠΩΛΗΤΗΣ</th>
+									<th scope="col">ΣΥΜΒΑΣΗ</th>
+									<th scope="col">ΕΝΕΡΓΕΙΑ</th>
+								</tr>
+							</thead>
+							<tbody id="customersBody"></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{{modals}}
+
+<script>
+	let apiUrl = "{{api_url}}";
+</script>
+
+{{scripts}}
