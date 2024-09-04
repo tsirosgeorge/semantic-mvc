@@ -5,7 +5,7 @@ function fetchCustomers() {
 	}
 	$.ajax({
 		type: "GET",
-		url: apiUrl + "customers/authorized",
+		url: apiUrl + "admin/authorized",
 		dataType: "json",
 		success: function (result) {
 			if (result.length > 0) {
@@ -33,7 +33,7 @@ function renderCustomerRows(customers) {
 			}
 			return `
             <tr style="cursor:pointer;" class="align-middle">
-                <td class="text-nowrap afm-excel">${customer.afm || ""}</td>
+                <td class="text-nowrap afm-excel text-start">${customer.afm || ""}</td>
                 <td class="text-nowrap text-ellipsis">${truncateString(customer.company || "", 40)}</td>
                 <td class="text-nowrap">${customer.rfullname || ""}</td>
                 <td class="text-nowrap date-excel">${formatDateWithoutTime(customer.created_at || "")}</td>
@@ -85,8 +85,8 @@ function renderCustomerRows(customers) {
 function generateActionButtons(customer) {
 	if (!customer.fileurl) {
 		return `
-            <button onclick="openContractModal('${customer.id}', '${customer.afm}')" class="btn btn-primary">Επεξεργασία</button>
-            <button onclick="createContract('${customer.afm}', '${customer.company}', '${customer.address}', '${customer.city}', '${customer.email}')" class="btn btn-info">Νέα σύμβαση</button>
+            <button onclick="openContractModal('${customer.id}', '${customer.afm}')" class="btn btn-primary btn-sm">Επεξεργασία</button>
+            <button onclick="createContract('${customer.afm}', '${customer.company}', '${customer.address}', '${customer.city}', '${customer.email}')" class="btn btn-info btn-sm">Νέα σύμβαση</button>
         `;
 	}
 

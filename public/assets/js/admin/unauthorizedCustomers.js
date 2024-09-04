@@ -2,7 +2,7 @@
 function createTableRow(customer) {
 	return `
         <tr style="cursor:pointer;" class="align-middle">
-            <td class="text-nowrap afm-excel">
+            <td class="text-nowrap afm-excel text-start">
                 <a href="#" onclick="copyAfm('${customer.afm}')">
                     <i class="fa-solid fa-copy"></i> ${customer.afm}
                 </a>
@@ -10,9 +10,9 @@ function createTableRow(customer) {
             <td class="text-nowrap text-ellipsis">${truncateString(customer.company, 40)}</td>
             <td class="text-nowrap">${customer.rfullname ? customer.rfullname : ""}</td>
             <td class="text-nowrap date-excel">${formatDateWithoutTime(customer.created_at)}</td>
-            <td class="text-nowrap">
-                <button onclick="authorizeCustomer(${customer.id})" class="btn btn-success">TaxisNet</button> / 
-                <button onclick="deleteCustomer(${customer.id})" class="btn btn-danger">Διαγραφή</button>
+            <td class="text-nowrap d-flex">
+                <button onclick="authorizeCustomer(${customer.id})" class="btn btn-success btn-sm">TaxisNet</button> | 
+                <button onclick="deleteCustomer(${customer.id})" class="btn btn-danger btn-sm">Διαγραφή</button>
             </td>
         </tr>`;
 }
@@ -34,7 +34,7 @@ function fetchCustomers() {
 
 	$.ajax({
 		type: "GET",
-		url: apiUrl + "customers/unauthorized",
+		url: apiUrl + "admin/unauthorized",
 		dataType: "json",
 		success: function (result) {
 			$("#customersBody").empty(); // Clear existing rows
@@ -92,7 +92,7 @@ function makeLineFetchCustomers(customers) {
 function authorizeCustomer(id) {
 	$.ajax({
 		type: "PUT",
-		url: `${apiUrl}customers/authorize/${id}`,
+		url: `${apiUrl}admin/authorize/${id}`,
 		dataType: "json",
 		success: function () {
 			toastr.success("Ο πελάτης εξουσιοδοτήθηκε με επιτυχία");
@@ -107,7 +107,7 @@ function authorizeCustomer(id) {
 function deleteCustomer(id) {
 	$.ajax({
 		type: "DELETE",
-		url: `${apiUrl}customers/delete/${id}`,
+		url: `${apiUrl}admin/delete/${id}`,
 		dataType: "json",
 		success: function () {
 			toastr.success("Ο πελάτης διαγράφηκε με επιτυχία");

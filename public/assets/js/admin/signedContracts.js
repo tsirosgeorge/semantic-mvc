@@ -5,7 +5,7 @@ function fetchCustomers() {
 
 	$.ajax({
 		type: "GET",
-		url: apiUrl + "customers/customersAuthAndSigned",
+		url: apiUrl + "admin/customersAuthAndSigned",
 		dataType: "json",
 		success: function (result) {
 			if (result.length > 0) {
@@ -32,7 +32,7 @@ function makeLineFetchCustomers(customers) {
 		}
 
 		s += '<tr style="cursor:pointer;" class="align-middle">';
-		s += '<td class="text-nowrap afm-excel">' + (customers[i].afm == null ? "" : customers[i].afm) + "</td>";
+		s += '<td class="text-nowrap afm-excel text-start">' + (customers[i].afm == null ? "" : customers[i].afm) + "</td>";
 		s += '<td class="text-nowrap text-ellipsis">' + truncateString(customers[i].company == null ? "" : customers[i].company, 40) + "</td>";
 		s += '<td class="text-nowrap">' + (customers[i].rfullname == null ? "" : customers[i].rfullname) + "</td>";
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers\Api;
+namespace App\Controllers\Api\Softhouse;
 
 use App\core\Controller;
 
-use App\Models\ResellersModel;
+use App\Models\Softhouse\ResellersModel;
 use App\core\Auth;
 
 

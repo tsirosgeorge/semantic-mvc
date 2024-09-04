@@ -24,7 +24,7 @@ function fetchCustomers() {
 		$("#customersTable").DataTable().destroy();
 	}
 
-	ajaxRequest("GET", apiUrl + "customers/active", {}, (result) => {
+	ajaxRequest("GET", apiUrl + "admin/active", {}, (result) => {
 		const customers = result || [];
 		if (customers.length > 0) {
 			renderCustomers(customers);
@@ -59,7 +59,7 @@ function renderCustomers(customers) {
 
 			return `
             <tr style="cursor:pointer;" class="align-middle">
-                <td class="text-nowrap afm-excel">${customer.afm || ""}</td>
+                <td class="text-nowrap afm-excel text-start">${customer.afm || ""}</td>
                 <td class="text-nowrap text-ellipsis">${truncateString(customer.company || "", 40)}</td>
                 <td class="text-nowrap">${customer.rfullname || ""}</td>
                 <td class="text-nowrap date-excel">${formatDateWithoutTime(customer.created_at)}</td>

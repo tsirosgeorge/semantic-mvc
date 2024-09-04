@@ -18,12 +18,12 @@ class DashboardController extends Controller
             'title' => 'Dashboard',
             'base_url' => $_SESSION['BASE_URL'],
             'api_url' => $_SESSION['API_URL'],
-            'user_role' => $_SESSION['user_roles'][0],
+            'modals' => [],
             'firstTwoLetters' => GeneralUtils::getInitials($_SESSION['email']),
+            'currentPage' => 'dashboard',
             'scripts' => [
-                '<script src="{{base_url}}assets/js/scripts/dashboard.js"></script>',
+                '<script src="{{base_url}}assets/js/admin/dashboard.js"></script>',
             ],
-            'currentPage' => 'dashboard'
         ];
         View::render('Admin/dashboard/dashboard', $data, 'admin');
     }
@@ -157,5 +157,25 @@ class DashboardController extends Controller
             ],
         ];
         View::render('Admin/dashboard/resellers', $data, 'admin');
+    }
+
+    public function softhouses()
+    {
+        Auth::check();
+        $data = [
+            'email' => $_SESSION['email'],
+            'title' => 'Resellers',
+            'firstTwoLetters' => GeneralUtils::getInitials($_SESSION['email']),
+            'base_url' => $_SESSION['BASE_URL'],
+            'api_url' => $_SESSION['API_URL'],
+            'currentPage' => 'softhouses',
+            'modals' => [
+                'Modals/Admin/add-softhouse',
+            ],
+            'scripts' => [
+                '<script src="{{base_url}}assets/js/admin/softhouses.js"></script>',
+            ],
+        ];
+        View::render('Admin/dashboard/softhouses', $data, 'admin');
     }
 }

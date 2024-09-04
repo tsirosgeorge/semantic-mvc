@@ -104,6 +104,24 @@
                                     </div>
                                 </a>
                                 <ul class="nav collapse show" id="dashboard">
+                                    <li class="nav-item"><a class="nav-link <?= $currentPage == 'dashboard' ? 'active' : '' ?>" href="/admin/dashboard">
+                                            <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Αρχική</span>
+                                            </div>
+                                        </a>
+                                        <!-- more inner pages-->
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link <?= $currentPage == 'softhouses' ? 'active' : '' ?>" href="/admin/softhouses">
+                                            <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Softhouses</span>
+                                            </div>
+                                        </a>
+                                        <!-- more inner pages-->
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link <?= $currentPage == 'resellers' ? 'active' : '' ?>" href="/admin/resellers">
+                                            <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Μεταπωλητές</span>
+                                            </div>
+                                        </a>
+                                        <!-- more inner pages-->
+                                    </li>
                                     <li class="nav-item"><a class="nav-link <?= $currentPage == 'all-customers' ? 'active' : '' ?>" href="/admin/all-customers">
                                             <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Όλοι οι πελάτες</span>
                                             </div>
@@ -140,12 +158,7 @@
                                         </a>
                                         <!-- more inner pages-->
                                     </li>
-                                    <li class="nav-item"><a class="nav-link <?= $currentPage == 'resellers' ? 'active' : '' ?>" href="/admin/resellers">
-                                            <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Μεταπωλητές</span>
-                                            </div>
-                                        </a>
-                                        <!-- more inner pages-->
-                                    </li>
+
                                 </ul>
                             </li>
                         </ul>
@@ -181,8 +194,6 @@
                                 <div class="bg-white dark__bg-1000 rounded-2 py-2">
                                     <a class="dropdown-item fw-bold text-warning" href="#!"><span>{{email}}</span></a>
 
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">{{user_role}}</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/api/logout">Logout</a>
                                 </div>

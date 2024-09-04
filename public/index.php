@@ -44,14 +44,37 @@ $router->group(['middleware' => 'auth'], function ($router) {
         $router->addRoute('GET', '/customers-for-register', 'Admin\DashboardController@customersForRegister');
         $router->addRoute('GET', '/active-customers', 'Admin\DashboardController@activeCustomers');
         $router->addRoute('GET', '/resellers', 'Admin\DashboardController@resellers');
+        $router->addRoute('GET', '/softhouses', 'Admin\DashboardController@softhouses');
 
         $router->addRoute('GET', '/users', 'Admin\UserController@index');
     });
 
-    // Editor routes
-    $router->group(['prefix' => '/softhouse', 'middleware' => 'role:softhouse'], function ($router) {
-        $router->addRoute('GET', '/content', 'Editor\ContentController@index');
+    // Softhouse routes
+    $router->group(['prefix' => '/softhouse', 'role' => 'softhouse'], function ($router) {
+        // $router->addRoute('GET', '/dashboard', 'Admin\DashboardController@index');
+        $router->addRoute('GET', '/dashboard', 'Softhouse\DashboardController@index', 'App\core\Middleware:admin');
+
+        $router->addRoute('GET', '/all-customers', 'Softhouse\DashboardController@allCustomers');
+        $router->addRoute('GET', '/unauthorized-customers', 'Softhouse\DashboardController@unauthorizedCustomers');
+        $router->addRoute('GET', '/customers-for-contract', 'Softhouse\DashboardController@customersForContract');
+        $router->addRoute('GET', '/signed-contracts', 'Softhouse\DashboardController@signedContracts');
+        $router->addRoute('GET', '/customers-for-register', 'Softhouse\DashboardController@customersForRegister');
+        $router->addRoute('GET', '/active-customers', 'Softhouse\DashboardController@activeCustomers');
+        $router->addRoute('GET', '/resellers', 'Softhouse\DashboardController@resellers');
+
+        $router->addRoute('GET', '/users', 'Softhouse\UserController@index');
     });
+
+    // Reseller routes
+    $router->group(['prefix' => '/reseller', 'role' => 'reseller'], function ($router) {
+        $router->addRoute('GET', '/dashboard', 'Reseller\DashboardController@index', 'App\core\Middleware:reseller');
+        $router->addRoute('GET', '/unauthorized-customers', 'Reseller\DashboardController@unauthorizedCustomers', 'App\core\Middleware:reseller');
+        $router->addRoute('GET', '/authorized-customers', 'Reseller\DashboardController@authorizedCustomers', 'App\core\Middleware:reseller');
+        $router->addRoute('GET', '/customers-with-contract', 'Reseller\DashboardController@customersWithContract', 'App\core\Middleware:reseller');
+        $router->addRoute('GET', '/ready-customers', 'Reseller\DashboardController@readyCustomers', 'App\core\Middleware:reseller');
+    });
+
+
 
     // Viewer routes
     $router->group(['prefix' => '/viewer', 'role' => 'viewer'], function ($router) {
@@ -69,30 +92,72 @@ $router->group(['prefix' => '/api'], function ($router) {
     $router->addRoute('GET', '/refresh-session', 'AuthController@refreshSession');
 
 
-    // Customers Routes
-    $router->group(['prefix' => '/customers'], function ($router) {
-        $router->addRoute('GET', '/', 'Api\CustomersController@index');
-        $router->addRoute('GET', '/{id:\d+}', 'Api\CustomersController@show');
-        $router->addRoute('GET', '/authorized', 'Api\CustomersController@authorized');
-        $router->addRoute('GET', '/unauthorized', 'Api\CustomersController@unauthorized');
-        $router->addRoute('GET', '/customersAuthAndSigned', 'Api\CustomersController@customersAuthAndSigned');
-        $router->addRoute('GET', '/allButNotAactive', 'Api\CustomersController@allButNotAactive');
-        $router->addRoute('GET', '/active', 'Api\CustomersController@getActiveCustomers');
+    // Admin Routes
+    $router->group(['prefix' => '/admin'], function ($router) {
+        $router->addRoute('GET', '/', 'Api\Admin\CustomersController@index');
+        $router->addRoute('GET', '/dashboard', 'Api\Admin\DashboardController@dashboard');
+        $router->addRoute('GET', '/{id:\d+}', 'Api\Admin\CustomersController@show');
+        $router->addRoute('GET', '/authorized', 'Api\Admin\CustomersController@authorized');
+        $router->addRoute('GET', '/unauthorized', 'Api\Admin\CustomersController@unauthorized');
+        $router->addRoute('GET', '/customersAuthAndSigned', 'Api\Admin\CustomersController@customersAuthAndSigned');
+        $router->addRoute('GET', '/allButNotAactive', 'Api\Admin\CustomersController@allButNotAactive');
+        $router->addRoute('GET', '/active', 'Api\Admin\CustomersController@getActiveCustomers');
 
 
-        // $router->addRoute('POST', '/', 'Api\CustomersController@store');
-        $router->addRoute('PUT', '/{id:\d+}', 'Api\CustomersController@update');
-        $router->addRoute('PUT', '/activate/{id:\d+}', 'Api\CustomersController@activate');
-        $router->addRoute('PUT', '/authorize/{id:\d+}', 'Api\CustomersController@authorize');
-        $router->addRoute('DELETE', '/delete/{id:\d+}', 'Api\CustomersController@destroy');
+        // $router->addRoute('POST', '/', 'Api\Admin\CustomersController@store');
+        $router->addRoute('PUT', '/{id:\d+}', 'Api\Admin\CustomersController@update');
+        $router->addRoute('PUT', '/activate/{id:\d+}', 'Api\Admin\CustomersController@activate');
+        $router->addRoute('PUT', '/authorize/{id:\d+}', 'Api\Admin\CustomersController@authorize');
+        $router->addRoute('DELETE', '/delete/{id:\d+}', 'Api\Admin\CustomersController@destroy');
+
+        $router->group(['prefix' => '/resellers'], function ($router) {
+            $router->addRoute('GET', '/', 'Api\Admin\ResellersController@index');
+            $router->addRoute('DELETE', '/delete/{id:\d+}', 'Api\Admin\ResellersController@destroy');
+            $router->addRoute('POST', '/store', 'Api\Admin\ResellersController@store');
+        });
+
+        $router->group(['prefix' => '/softhouses'], function ($router) {
+            $router->addRoute('GET', '/', 'Api\Admin\SofthousesController@index');
+            $router->addRoute('DELETE', '/delete/{id:\d+}', 'Api\Admin\SofthousesController@destroy');
+            $router->addRoute('POST', '/store', 'Api\Admin\SofthousesController@store');
+        });
     });
 
-    $router->group(['prefix' => '/resellers'], function ($router) {
-        $router->addRoute('GET', '/', 'Api\ResellersController@index');
-        $router->addRoute('DELETE', '/delete/{id:\d+}', 'Api\ResellersController@destroy');
-        $router->addRoute('POST', '/store', 'Api\ResellersController@store');
+    //Softhouse API Routes
+    $router->group(['prefix' => '/softhouse'], function ($router) {
+        $router->addRoute('GET', '/', 'Api\Admin\CustomersController@index');
+        $router->addRoute('GET', '/{id:\d+}', 'Api\Admin\CustomersController@show');
+        $router->addRoute('GET', '/authorized', 'Api\Admin\CustomersController@authorized');
+        $router->addRoute('GET', '/unauthorized', 'Api\Admin\CustomersController@unauthorized');
+        $router->addRoute('GET', '/customersAuthAndSigned', 'Api\Admin\CustomersController@customersAuthAndSigned');
+        $router->addRoute('GET', '/allButNotAactive', 'Api\Admin\CustomersController@allButNotAactive');
+        $router->addRoute('GET', '/active', 'Api\Admin\CustomersController@getActiveCustomers');
+
+
+        // $router->addRoute('POST', '/', 'Api\Admin\CustomersController@store');
+        $router->addRoute('PUT', '/{id:\d+}', 'Api\Admin\CustomersController@update');
+        $router->addRoute('PUT', '/activate/{id:\d+}', 'Api\Admin\CustomersController@activate');
+        $router->addRoute('PUT', '/authorize/{id:\d+}', 'Api\Admin\CustomersController@authorize');
+        $router->addRoute('DELETE', '/delete/{id:\d+}', 'Api\Admin\CustomersController@destroy');
+
+        $router->group(['prefix' => '/resellers'], function ($router) {
+            $router->addRoute('GET', '/', 'Api\Admin\ResellersController@index');
+            $router->addRoute('DELETE', '/delete/{id:\d+}', 'Api\Admin\ResellersController@destroy');
+            $router->addRoute('POST', '/store', 'Api\Admin\ResellersController@store');
+        });
+    });
+
+
+
+    //Reseller API Routes
+    $router->group(['prefix' => '/reseller'], function ($router) {
+        $router->addRoute('GET', '/unauthorized', 'Api\Reseller\CustomersController@unauthorized');
+        $router->addRoute('GET', '/authorized', 'Api\Reseller\CustomersController@authorized');
+        $router->addRoute('GET', '/customerWithContract', 'Api\Reseller\CustomersController@customerWithContract');
+        $router->addRoute('GET', '/readyCustomers', 'Api\Reseller\CustomersController@readyCustomers');
     });
 });
+
 
 
 $router->group(['prefix' => '/check'], function ($router) {

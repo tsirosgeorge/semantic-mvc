@@ -1,0 +1,70 @@
+<div class="modal fade" id="add-customer-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content position-relative">
+			<div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+				<button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<form class="needs-validation" novalidate="" id="customer-add-form">
+				<div class="modal-body p-0">
+					<div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+						<h4 class="mb-1" id="modalExampleDemoLabel">Προσθήκη πελάτη</h4>
+					</div>
+					<div class="p-4 pb-0">
+						<div>
+							<div class="row">
+								<div class="col">
+									<label class="col-form-label" for="customer-name">ΟΝ/ΜΟ ΝΟΜΙΜΟΥ ΕΚΠΡΟΣΩΠΟΥ:</label>
+									<input class="form-control" id="customer-name" type="text" />
+								</div>
+								<div class="col">
+									<label class="col-form-label" for="customer-company">ΕΠΩΝΥΜΙΑ:</label>
+									<input class="form-control" id="customer-company" type="text" required="" />
+								</div>
+							</div>
+							<label class="col-form-label" for="customer-afm">ΑΦΜ:</label>
+							<div class="row g-3">
+								<div class="col">
+									<input class="form-control" id="customer-afm" type="text" required="" maxlength="9" />
+								</div>
+								<div class="col">
+									<button id="checkVatNumber" class="btn btn-primary w-100" type="button">Αναζήτηση στοιχείων με ΑΦΜ</button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label class="col-form-label" for="customer-email">Email:</label>
+									<input class="form-control" id="customer-email" type="text" required="" />
+									<div class="invalid-feedback">Please choose a username.</div>
+								</div>
+								<div class="col">
+									<label class="col-form-label" for="customer-pass">Password:</label>
+									<input class="form-control" id="customer-pass" type="text" required="" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label class="col-form-label" for="customer-city">Πόλη:</label>
+									<input class="form-control" id="customer-city" type="text" required="" />
+								</div>
+								<div class="col">
+									<label class="col-form-label" for="customer-address">Διεύθυνση:</label>
+									<input class="form-control" id="customer-address" type="text" required="" />
+								</div>
+							</div>
+
+							<div class="mb-3">
+								<label class="col-form-label" for="customer-tk">ΤΚ:</label>
+								<input class="form-control" id="customer-tk" type="text" required="" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Ακύρωση</button>
+
+					<button class="btn btn-success" type="submit">Αποθήκευση</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

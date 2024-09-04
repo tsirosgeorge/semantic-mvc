@@ -20,7 +20,7 @@ function fetchCustomers() {
 		$("#customersTable").DataTable().destroy();
 	}
 
-	ajaxRequest("GET", apiUrl + "customers/allButNotAactive", {}, (result) => {
+	ajaxRequest("GET", apiUrl + "admin/allButNotAactive", {}, (result) => {
 		if (result.length > 0) {
 			console.log(result);
 			renderCustomers(result);
@@ -47,17 +47,17 @@ function renderCustomers(customers) {
 			const isContractSigned = customer.contract === 1;
 
 			const contractButton = customer.fileurl ? generateContractButton(fileUrl, isContractSigned) : generateEditButtons(customer);
-			const eskapStatus = customer.eskap === 0 ? generateRegisterEskapButton(customer) : '<span class="badge badge-soft-success">Εγγεγραμμένος</span>';
-			const activateButton = customer.activate === 0 ? generateActivateButton(customer.id) : '<span class="badge badge-soft-success">Ενεργοποιημένος</span>';
+			const eskapStatus = customer.eskap === 0 ? generateRegisterEskapButton(customer) : '<span class="badge badge-subtle-success">Εγγεγραμμένος</span>';
+			const activateButton = customer.activate === 0 ? generateActivateButton(customer.id) : '<span class="badge badge-subtle-success">Ενεργοποιημένος</span>';
 
 			return `
             <tr style="cursor:pointer;" class="align-middle">
-                <td class="text-nowrap afm-excel">${afm}</td>
+                <td class="text-nowrap afm-excel text-start">${afm}</td>
                 <td class="text-nowrap text-ellipsis">${company}</td>
                 <td class="text-nowrap">${rfullname}</td>
                 <td class="text-nowrap date-excel">${createdAt}</td>
                 <td class="text-nowrap">${contractButton}</td>
-                <td>${activateButton} | ${eskapStatus}</td>
+                <td class="d-flex align-items-center">${activateButton} | ${eskapStatus}</td>
                 <td class="text-nowrap email-excel">${email}</td>
             </tr>`;
 		})
@@ -121,11 +121,11 @@ function generateEditButtons(customer) {
 }
 
 function generateRegisterEskapButton(customer) {
-	return `<button onclick="registerEskap('${customer.id}', '${customer.company}', '${customer.email}', '${customer.password}', '${customer.fullname}', '${customer.afm}', '${customer.address}', '${customer.postalcode}', '${customer.city}')" class="btn btn-primary">Εγγραφή ESKAP</button>`;
+	return `<button onclick="registerEskap('${customer.id}', '${customer.company}', '${customer.email}', '${customer.password}', '${customer.fullname}', '${customer.afm}', '${customer.address}', '${customer.postalcode}', '${customer.city}')" class="btn btn-primary btn-sm">Εγγραφή ESKAP</button>`;
 }
 
 function generateActivateButton(id) {
-	return `<button onclick="setActivate(${id})" class="btn btn-success">Ενεργοποίηση</button>`;
+	return `<button onclick="setActivate(${id})" class="btn btn-success btn-sm">Ενεργοποίηση</button>`;
 }
 
 // Modal Handling
@@ -165,6 +165,9 @@ function registerEskap(id, company, email, password, fullname, afm, address, pos
 		city,
 	};
 
+	console.log(ar);
+	return;
+
 	ajaxRequest("POST", "https://invoicing4all.com/panel/ajaxSrv.php?op=registerEskap", ar, (result) => {
 		try {
 			const message = JSON.parse(result.message);
@@ -200,7 +203,7 @@ function registerEskap(id, company, email, password, fullname, afm, address, pos
 }
 // Activate Customer
 function setActivate(id) {
-	ajaxRequest("PUT", apiUrl + "customers/activate/" + id, {}, fetchCustomers);
+	ajaxRequest("PUT", apiUrl + "admin/activate/" + id, {}, fetchCustomers);
 }
 
 // Initial Fetch

@@ -18,10 +18,14 @@ function ajaxRequest(type, url, data = {}, successCallback, errorCallback = hand
 // Fetch and Render Resellers
 
 function fetchResellers() {
-	ajaxRequest("GET", apiUrl + "resellers/", {}, (result) => {
+	if ($.fn.DataTable.isDataTable("#resellersTable")) {
+		$("#resellersTable").DataTable().destroy();
+	}
+	ajaxRequest("GET", apiUrl + "admin/resellers/", {}, (result) => {
 		const resellers = result.resellers || [];
 		const totalCustomers = result.totalCustomersPerReseller || [];
 
+		console.log(resellers);
 		if (resellers.length > 0) {
 			renderResellers(resellers, totalCustomers);
 		} else {
@@ -43,24 +47,31 @@ function renderResellers(resellers, totalCustomers) {
 		.map(
 			(reseller) => `
         <tr style="cursor:pointer;" class="align-middle">
-            <td class="text-nowrap">${reseller.afm}</td>
-            <td class="text-nowrap">${reseller.fullname}</td>
-            <td class="text-nowrap">${reseller.email}</td>
-            <td class="text-nowrap">${reseller.count}</td>
+            <td class="text-nowrap text-start">${reseller.afm == null ? "-" : reseller.afm}</td>
+            <td class="text-nowrap">${reseller.name == null ? "-" : reseller.name}</td>
+            <td class="text-nowrap">${reseller.email == null ? "-" : reseller.email}</td>
+            <td class="text-nowrap text-start">${reseller.count}</td>
             <td class="text-nowrap">
-                <button class="btn btn-danger" onclick="deleteReseller(${reseller.id})">Διαγραφή</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteReseller(${reseller.id})">Διαγραφή</button>
             </td>
         </tr>`
 		)
 		.join("");
 
 	$("#resellersBody").html(rows);
+
+	var table = $("#resellersTable").DataTable({
+		order: [],
+		language: {
+			url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Greek.json",
+		},
+	});
 }
 
 // Delete Reseller
 
 function deleteReseller(id) {
-	ajaxRequest("DELETE", apiUrl + "resellers/delete/" + id, {}, (result) => {
+	ajaxRequest("DELETE", apiUrl + "admin/resellers/delete/" + id, {}, (result) => {
 		if (result.message === "Reseller was not deleted successfully") {
 			Swal.fire({
 				position: "center",

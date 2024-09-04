@@ -4,6 +4,7 @@ namespace App\core;
 
 use FastRoute;
 use App\core\Auth;
+use App\core\View;
 
 class Router
 {
@@ -80,12 +81,12 @@ class Router
         switch ($routeInfo[0]) {
             case FastRoute\Dispatcher::NOT_FOUND:
                 http_response_code(404);
-                echo '404 Not Found';
+                View::render('errors/404', [], 'error');
                 break;
             case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
                 $allowedMethods = $routeInfo[1];
                 http_response_code(405);
-                echo '405 Method Not Allowed';
+                View::render('errors/405', [], 'error');
                 break;
             case FastRoute\Dispatcher::FOUND:
                 $handler = $routeInfo[1];

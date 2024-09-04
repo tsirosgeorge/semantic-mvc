@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Softhouse;
 
 use App\core\Model;
 

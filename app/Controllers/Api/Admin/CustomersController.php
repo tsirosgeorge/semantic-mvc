@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers\Api;
+namespace App\Controllers\Api\Admin;
 
 use App\core\Controller;
 
-use App\Models\CustomersModel;
+use App\Models\Admin\CustomersModel;
 use App\core\Auth;
 
 

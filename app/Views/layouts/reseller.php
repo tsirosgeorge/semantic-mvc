@@ -24,9 +24,13 @@
     <meta name="msapplication-TileImage" content="assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <script src="{{base_url}}assets/js/config.js"></script>
     <script src="{{base_url}}vendors/simplebar/simplebar.min.js"></script>
     <script src="{{base_url}}assets/js/scripts/utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
     <!-- ===============================================-->
@@ -100,20 +104,26 @@
                                     </div>
                                 </a>
                                 <ul class="nav collapse show" id="dashboard">
-                                    <li class="nav-item"><a class="nav-link <?= $currentPage == 'contacts' ? 'active' : '' ?>" href="/dashboard">
-                                            <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Contacts</span>
+                                    <li class="nav-item"><a class="nav-link <?= $currentPage == 'unauthorized-customers' ? 'active' : '' ?>" href="/reseller/unauthorized-customers">
+                                            <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Πελάτες χωρίς εξουσιοδότηση</span>
                                             </div>
                                         </a>
                                         <!-- more inner pages-->
                                     </li>
-                                    <li class="nav-item"><a class="nav-link <?= $currentPage == 'members' ? 'active' : '' ?>" href="/dashboard/members">
-                                            <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Members</span>
+                                    <li class="nav-item"><a class="nav-link <?= $currentPage == 'authorized-customers' ? 'active' : '' ?>" href="/reseller/authorized-customers">
+                                            <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Πελάτες με εξουσιοδότηση</span>
                                             </div>
                                         </a>
                                         <!-- more inner pages-->
                                     </li>
-                                    <li class="nav-item"><a class="nav-link <?= $currentPage == 'b2binterest' ? 'active' : '' ?>" href="/dashboard/b2binterest">
-                                            <div class="d-flex align-items-center"><span class="nav-link-text ps-1">B2B Interested</span>
+                                    <li class="nav-item"><a class="nav-link <?= $currentPage == 'customers-with-contract' ? 'active' : '' ?>" href="/reseller/customers-with-contract">
+                                            <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Πελάτες με σύμβαση</span>
+                                            </div>
+                                        </a>
+                                        <!-- more inner pages-->
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link <?= $currentPage == 'ready-customers' ? 'active' : '' ?>" href="/reseller/ready-customers">
+                                            <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Έτοιμοι πελάτες</span>
                                             </div>
                                         </a>
                                         <!-- more inner pages-->
@@ -151,7 +161,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
                                 <div class="bg-white dark__bg-1000 rounded-2 py-2">
-                                    <a class="dropdown-item fw-bold text-warning" href="#!"><span>{{username}}</span></a>
+                                    <a class="dropdown-item fw-bold text-warning" href="#!"><span>{{email}}</span></a>
 
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/api/logout">Logout</a>

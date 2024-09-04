@@ -6,7 +6,7 @@ function fetchCustomers() {
 
 	$.ajax({
 		type: "GET",
-		url: apiUrl + "customers/",
+		url: apiUrl + "admin/",
 		dataType: "json",
 		success: function (result) {
 			if (result.length > 0) {
@@ -38,11 +38,11 @@ function makeLineFetchCustomers(customers) {
 		}
 
 		s += `<tr style="cursor:pointer;" class="align-middle">`;
-		s += `<td class="text-nowrap afm-excel" onclick="window.location='${editUrl}'">${customer.afm || ""}</td>`;
+		s += `<td class="text-nowrap afm-excel text-start" onclick="window.location='${editUrl}'">${customer.afm || ""}</td>`;
 		s += `<td class="text-nowrap text-ellipsis" onclick="window.location='${editUrl}'">${truncateString(customer.company || "", 40)}</td>`;
 		s += `<td class="text-nowrap">${customer.rfullname || ""}</td>`;
 		s += `<td class="text-nowrap date-excel" onclick="window.location='${editUrl}'">${formatDateWithoutTime(customer.created_at || "")}</td>`;
-		s += `<td class="text-nowrap text-end"><button onclick="editCustomer(${customerId})" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></td>`;
+		s += `<td class="text-nowrap text-start"><button onclick="editCustomer(${customerId})" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i></button></td>`;
 		s += `</tr>`;
 	}
 	$("#customersBody").html(s);
@@ -104,7 +104,7 @@ function editCustomer(id) {
 		.on("shown.bs.modal", function () {
 			$.ajax({
 				type: "GET",
-				url: apiUrl + "customers/" + id,
+				url: apiUrl + "admin/" + id,
 				dataType: "json",
 				success: function (result) {
 					const customer = result[0];
@@ -139,7 +139,7 @@ function saveCustomer() {
 
 	$.ajax({
 		type: "PUT",
-		url: apiUrl + "customers/" + $("#customerIdModal").val(),
+		url: apiUrl + "admin/" + $("#customerIdModal").val(),
 		data: JSON.stringify(ar),
 		dataType: "json",
 		success: function (result) {
@@ -165,23 +165,6 @@ function saveCustomer() {
 					fetchCustomers();
 				});
 			}
-		},
-		error: function (xhr) {
-			console.error("Request Status:", xhr.status, "Status Text:", xhr.statusText, "Response Text:", xhr.responseText);
-		},
-	});
-}
-
-function fetchCustomersByResellers() {
-	const ar = { resellerid: $("#resellerSelect").val() };
-
-	$.ajax({
-		type: "POST",
-		url: apiUrl + "ajaxSrv.php?op=fetchCustomersByResellers",
-		data: ar,
-		dataType: "json",
-		success: function (result) {
-			makeLineFetchCustomers(result.data.resellers);
 		},
 		error: function (xhr) {
 			console.error("Request Status:", xhr.status, "Status Text:", xhr.statusText, "Response Text:", xhr.responseText);

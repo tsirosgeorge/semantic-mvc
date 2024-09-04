@@ -3,6 +3,7 @@
 namespace App\core;
 
 use App\core\Auth;
+use App\core\View;
 
 class Middleware
 {
@@ -10,7 +11,7 @@ class Middleware
     {
         if (!Auth::hasRole($role)) {
             http_response_code(403);
-            echo '403 Forbidden - You do not have access to this page.';
+            View::render('errors/403', [], 'error');
             exit;
         }
 
