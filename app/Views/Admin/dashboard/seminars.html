@@ -1,0 +1,45 @@
+<div class="row g-3 mb-3">
+	<div class="card mb-3">
+		<div class="card-header border-bottom">
+			<div class="row flex-between-end">
+				<div class="col-auto flex-lg-grow-1 flex-lg-basis-0 align-self-center">
+					<h5 class="mb-0">Σεμινάρια</h5>
+				</div>
+				<div class="col-auto ms-auto">
+					<div class="flex-grow-1 m-2 flex-column">
+						<button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#add-seminars-modal">Προσθήκη</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-body pt-0">
+			<div class="tab-content">
+				<div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-9e80409e-49e0-4986-9fcb-16b9838d0cff" id="dom-9e80409e-49e0-4986-9fcb-16b9838d0cff">
+					<div class="table-responsive scrollbar">
+						<table id="seminarsTable" class="table table-hover table-striped overflow-hidden">
+							<thead>
+								<tr>
+									<th class="col">Ημερομηνία</th>
+									<th class="col">Έναρξη</th>
+									<th class="col">Λήξη</th>
+									<th class="description-column col">Περιγραφή</th>
+									<th class="col">Σύνδεσμος</th>
+									<!-- <th scope="col">ΕΝΕΡΓΕΙΑ</th> -->
+								</tr>
+							</thead>
+							<tbody id="seminarBody"></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{{modals}}
+
+<script>
+	let apiUrl = "{{api_url}}";
+</script>
+
+{{scripts}}

@@ -134,8 +134,8 @@ class Router
             case 'softhouse':
                 $redirectUrl = '/softhouse' . $_ENV['REDIRECT_AFTER_LOGIN'];
                 break;
-            case 'viewer':
-                $redirectUrl = '/viewer' . $_ENV['REDIRECT_AFTER_LOGIN'];
+            case 'reseller':
+                $redirectUrl = '/reseller' . $_ENV['REDIRECT_AFTER_LOGIN'];
                 break;
             default:
                 $redirectUrl = '/';

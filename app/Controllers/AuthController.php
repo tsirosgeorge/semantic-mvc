@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        View::render('login', [], 'auth');
+        Auth::checkAuthPage();
     }
 
     public function login()

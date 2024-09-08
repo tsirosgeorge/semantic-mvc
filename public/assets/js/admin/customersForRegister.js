@@ -165,10 +165,10 @@ function registerEskap(id, company, email, password, fullname, afm, address, pos
 		city,
 	};
 
-	console.log(ar);
-	return;
+	// console.log(ar);
+	// return;
 
-	ajaxRequest("POST", "https://invoicing4all.com/panel/ajaxSrv.php?op=registerEskap", ar, (result) => {
+	ajaxRequest("POST", apiUrl + "admin/registerEskap", JSON.stringify(ar), (result) => {
 		try {
 			const message = JSON.parse(result.message);
 			if (message.error === "A customer with this email and afm already exists") {

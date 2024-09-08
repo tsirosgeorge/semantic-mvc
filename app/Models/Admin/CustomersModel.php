@@ -102,4 +102,57 @@ class CustomersModel extends Model
 
         return ['resellers' => $resellers, 'totalCustomersPerReseller' => $totalCustomersPerReseller];
     }
+
+    public function setContract($id, $data)
+    {
+
+        $sql = "UPDATE customers SET contract = ? WHERE id = ?";
+        $values = ["ii", $data['contract'], $id];
+        return $this->executeSql($sql, $values);
+    }
+
+    public function registerEskap($data)
+    {
+        $postData = array(
+            'email' => $data['email'],
+            'pass' => $data['pass'],
+            'company' => $data['company'],
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'afm' => $data['afm'],
+            'address' => $data['address'],
+            'postcode' => $data['postcode'],
+            'city' => $data['city'],
+            'username' => 'semantic',
+            'password' => 'Sem@nt!cEsk@p2024'
+        );
+        $jsonData = json_encode($postData);
+
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://www.eskap.gr/v2/api.php?op=addCustomer',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $jsonData,
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        if ($response === false) {
+            $error = curl_error($curl);
+
+            return ['success' => false, 'message' => 'Customer not inserted successfully', 'status_code' => 404];
+        } else {
+            $this->executeSql("UPDATE customers set eskap = 1 where id = ?", array("i", $data["id"]));
+            return ['success' => true, 'msg' => $response, 'status_code' => 200];
+        }
+    }
 }

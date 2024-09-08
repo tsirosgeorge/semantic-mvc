@@ -131,7 +131,7 @@ function createContract(afm, fullname, address, city, email) {
 		companyDate: currentDate,
 	}).toString();
 
-	window.open(`https://invoicing4all.com/panel/contract/index.html?${queryString}`, "_blank");
+	window.open(`${baseUrl}contract/index.html?${queryString}`, "_blank");
 }
 
 // Display no results message

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  </head>
+  <body>
+    <div class="container vh-100">
+      <div class="row vh-100">
+        <div class="vh-100 col-lg-12 grid justify-content-center align-items-center">
+          <div class="col-lg-12 vh-100 align-items-center" style="display: grid">
+            <div class="row">
+              <div class="col">
+                <label for="exampleInputEmail1" class="form-label">Επωνυμία Επιχείρησης</label>
+                <input type="text" class="form-control" id="companyname" aria-describedby="emailHelp" />
+              </div>
+
+              <div class="col">
+                <label for="exampleInputEmail1" class="form-label">Διακριτικός Τίτλος</label>
+                <input type="text" class="form-control" id="companytitle" aria-describedby="emailHelp" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label for="exampleInputEmail1" class="form-label">Α.Φ.Μ</label>
+                <input type="text" class="form-control" id="companyafm" aria-describedby="emailHelp" />
+              </div>
+
+              <div class="col">
+                <label for="exampleInputEmail1" class="form-label">Έδρα (Πόλη)</label>
+                <input type="text" class="form-control" id="companycity" aria-describedby="emailHelp" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label for="exampleInputEmail1" class="form-label">Διεύθυνση</label>
+                <input type="text" class="form-control" id="companyaddress" aria-describedby="emailHelp" />
+              </div>
+
+              <div class="col">
+                <label for="exampleInputEmail1" class="form-label">Αριθμός</label>
+                <input type="text" class="form-control" id="companynumber" aria-describedby="emailHelp" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label for="exampleInputEmail1" class="form-label">Όνομα Διαχειριστή Εκπροσώπου</label>
+                <input type="text" class="form-control" id="companyname2" aria-describedby="emailHelp" />
+              </div>
+
+              <div class="col">
+                <label for="exampleInputEmail1" class="form-label">Πάροχος Τηλεφωνίας</label>
+                <input type="text" class="form-control" id="companyprovider" aria-describedby="emailHelp" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="exampleInputEmail1" class="form-label">Αριθμός Σύμβασης ή Κινητό</label>
+                <input type="text" class="form-control" id="companyphone" aria-describedby="emailHelp" />
+              </div>
+              <div class="col">
+                <label for="exampleInputEmail1" class="form-label">Ημερομηνία</label>
+                <input type="text" class="form-control" id="companydate" aria-describedby="emailHelp" />
+              </div>
+            </div>
+
+            <button onclick="saveFile()" type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+      let emailToSend = "";
+      function saveFile() {
+        var ar = {};
+        ar.companyName = $("#companyname").val();
+        ar.companyTitle = $("#companytitle").val();
+        ar.companyAfm = $("#companyafm").val();
+        ar.companyCity = $("#companycity").val();
+        ar.companyAddress = $("#companyaddress").val();
+        ar.companyNumber = $("#companynumber").val();
+        ar.companyName2 = $("#companyname2").val();
+        ar.companyProvider = $("#companyprovider").val();
+        ar.companyPhone = $("#companyphone").val();
+        ar.companyDate = $("#companydate").val();
+        ar.companyEmail = emailToSend;
+
+        console.log(ar);
+
+        var queryString = new URLSearchParams(ar).toString();
+        window.location.href = "file.html?" + queryString;
+      }
+
+      $(document).ready(function () {
+        var params = new URLSearchParams(window.location.search);
+        console.log(params);
+
+        $("#companyname").val(params.get("companyName"));
+        $("#companyafm").val(params.get("companyAfm"));
+        $("#companycity").val(params.get("companyCity"));
+        $("#companyaddress").val(params.get("companyAddress"));
+        $("#companydate").val(params.get("companyDate"));
+        emailToSend = params.get("companyEmail");
+      });
+    </script>
+  </body>
+</html>

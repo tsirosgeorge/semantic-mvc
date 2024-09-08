@@ -33,21 +33,34 @@
 
 <script>
 	function uploadFile() {
-		// console.log(customerId);
 		var customerId = $("#customer-id").val();
+		var fileInput = $("#fileInput")[0].files[0];
+
+		// Check if a file is selected
+		if (!fileInput) {
+			Swal.fire({
+				position: "center",
+				icon: "error",
+				title: "No file selected!",
+				showConfirmButton: true,
+			});
+			return;
+		}
+
 		var formData = new FormData();
-		formData.append("file", $("#fileInput")[0].files[0]);
+		formData.append("file", fileInput);
+		formData.append("customerId", customerId);
+
 		$.ajax({
-			url: "https://invoicing4all.com/panel/ajaxSrv.php?op=uploadFile&id=" + customerId,
+			url: apiUrl + "admin/fileUpload/" + customerId,
 			type: "POST",
 			data: formData,
 			contentType: false,
 			processData: false,
 			dataType: "json",
 			success: function (result) {
-				// console.log(result);
 				if (result && result.message) {
-					if (result.message != "File uploaded successfully") {
+					if (result.message !== "File uploaded successfully") {
 						Swal.fire({
 							position: "center",
 							icon: "error",
@@ -61,8 +74,7 @@
 							title: "Καταχωρήθηκε με επιτυχία",
 							showConfirmButton: false,
 							timer: 1500,
-						}).then((result) => {
-							// sendContract(customerId);
+						}).then(() => {
 							fetchCustomers();
 							$("#edit-contract-modal").modal("hide");
 						});
@@ -70,7 +82,12 @@
 				}
 			},
 			error: function (xhr) {
-				alert("Request Status: " + xhr.status + " Status Text: " + xhr.statusText + " " + xhr.responseText);
+				Swal.fire({
+					position: "center",
+					icon: "error",
+					title: "An error occurred: " + xhr.status + " " + xhr.statusText,
+					showConfirmButton: true,
+				});
 			},
 		});
 	}

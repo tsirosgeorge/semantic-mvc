@@ -3,6 +3,7 @@
 namespace App\core;
 
 use App\Models\UserModel;
+use App\core\View;
 
 class Auth
 {
@@ -75,6 +76,21 @@ class Auth
 
         $permissions = $userModel->getUserPermissions($user['id']);
         $_SESSION['user_permissions'] = array_unique(array_column($permissions, 'name')); // Ensure no duplicates
+    }
+
+    public static function checkAuthPage()
+    {
+
+        self::startSession(); // Ensure session is started and checked
+
+        if (!isset($_SESSION['user_id'])) {
+            View::render('login', [], 'auth');
+            exit;
+        } else {
+            $role = $_SESSION['user_roles'][0]["name"];
+            header('Location: /' . $role . '/dashboard');
+            exit;
+        }
     }
 
 

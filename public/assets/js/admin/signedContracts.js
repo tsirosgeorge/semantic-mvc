@@ -105,10 +105,12 @@ function openContractModal($id, $afm) {
 }
 
 function setContract($id, $set) {
+	var ar = {};
+	ar.contract = $set;
 	$.ajax({
 		type: "POST",
-		url: apiUrl + "ajaxSrv.php?op=setContract&id=" + $id,
-		data: { set: $set },
+		url: apiUrl + "admin/setContract/" + $id,
+		data: JSON.stringify(ar),
 		dataType: "json",
 		success: function (result) {
 			fetchCustomers();

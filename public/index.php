@@ -31,6 +31,13 @@ $router = new Router();
 
 // Group for Pages Routes
 $router->addRoute('GET', '/', 'AuthController@showLoginForm');
+
+$router->group(['prefix' => '/seminars'], function ($router) {
+    $router->addRoute('GET', '/', 'SeminarsController@showSeminars');
+    $router->addRoute('GET', '/fetchSeminars', 'SeminarsController@fetchSeminars');
+});
+
+
 $router->group(['middleware' => 'auth'], function ($router) {
     // Admin routes
     $router->group(['prefix' => '/admin', 'role' => 'admin'], function ($router) {
@@ -45,6 +52,7 @@ $router->group(['middleware' => 'auth'], function ($router) {
         $router->addRoute('GET', '/active-customers', 'Admin\DashboardController@activeCustomers');
         $router->addRoute('GET', '/resellers', 'Admin\DashboardController@resellers');
         $router->addRoute('GET', '/softhouses', 'Admin\DashboardController@softhouses');
+        $router->addRoute('GET', '/seminars', 'Admin\DashboardController@seminars');
 
         $router->addRoute('GET', '/users', 'Admin\UserController@index');
     });
@@ -52,7 +60,7 @@ $router->group(['middleware' => 'auth'], function ($router) {
     // Softhouse routes
     $router->group(['prefix' => '/softhouse', 'role' => 'softhouse'], function ($router) {
         // $router->addRoute('GET', '/dashboard', 'Admin\DashboardController@index');
-        $router->addRoute('GET', '/dashboard', 'Softhouse\DashboardController@index', 'App\core\Middleware:admin');
+        $router->addRoute('GET', '/dashboard', 'Softhouse\DashboardController@index', 'App\core\Middleware:softhouse');
 
         $router->addRoute('GET', '/all-customers', 'Softhouse\DashboardController@allCustomers');
         $router->addRoute('GET', '/unauthorized-customers', 'Softhouse\DashboardController@unauthorizedCustomers');
@@ -102,6 +110,18 @@ $router->group(['prefix' => '/api'], function ($router) {
         $router->addRoute('GET', '/customersAuthAndSigned', 'Api\Admin\CustomersController@customersAuthAndSigned');
         $router->addRoute('GET', '/allButNotAactive', 'Api\Admin\CustomersController@allButNotAactive');
         $router->addRoute('GET', '/active', 'Api\Admin\CustomersController@getActiveCustomers');
+        $router->addRoute('GET', '/fetchSeminars', 'Api\Admin\SeminarsController@fetchSeminars');
+
+        $router->addRoute('DELETE', '/deleteSeminar/{id:\d+}', 'Api\Admin\SeminarsController@deleteSeminar');
+
+        $router->addRoute('POST', '/createSeminar', 'Api\Admin\SeminarsController@createSeminar');
+
+        $router->addRoute('POST', '/fileUpload/{id:\d+}', 'Api\Admin\FileController@store');
+        $router->addRoute('POST', '/savePdf', 'Api\Admin\FileController@storePDF');
+
+        $router->addRoute('POST', '/setContract/{id:\d+}', 'Api\Admin\CustomersController@setContract');
+        $router->addRoute('POST', '/registerEskap', 'Api\Admin\CustomersController@registerEskap');
+
 
 
         // $router->addRoute('POST', '/', 'Api\Admin\CustomersController@store');

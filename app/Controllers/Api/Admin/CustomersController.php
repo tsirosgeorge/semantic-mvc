@@ -115,4 +115,20 @@ class CustomersController extends Controller
         $customers = $customerModel->getResellers();
         $this->jsonResponse($customers);
     }
+
+    public function setContract($id)
+    {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $customerModel = new CustomersModel();
+        $customer = $customerModel->setContract($id, $_POST);
+        $this->jsonResponse($customer);
+    }
+
+    public function registerEskap()
+    {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $customerModel = new CustomersModel();
+        $customer = $customerModel->registerEskap($_POST);
+        $this->jsonResponse($customer);
+    }
 }

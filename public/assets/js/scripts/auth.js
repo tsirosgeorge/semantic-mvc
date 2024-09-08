@@ -57,6 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
 						window.location.href = "/admin/dashboard";
 					} else if (result.role == "reseller") {
 						window.location.href = "/reseller/dashboard";
+					} else if (result.role == "softhouse") {
+						window.location.href = "/softhouse/dashboard";
 					}
 					// window.location.href = "/dashboard";
 				}, 1000);

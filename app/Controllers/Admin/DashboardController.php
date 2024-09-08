@@ -178,4 +178,24 @@ class DashboardController extends Controller
         ];
         View::render('Admin/dashboard/softhouses', $data, 'admin');
     }
+
+    public function seminars()
+    {
+        Auth::check();
+        $data = [
+            'email' => $_SESSION['email'],
+            'title' => 'Seminars',
+            'firstTwoLetters' => GeneralUtils::getInitials($_SESSION['email']),
+            'base_url' => $_SESSION['BASE_URL'],
+            'api_url' => $_SESSION['API_URL'],
+            'currentPage' => 'seminars',
+            'modals' => [
+                'Modals/Admin/add-seminars',
+            ],
+            'scripts' => [
+                '<script src="{{base_url}}assets/js/admin/seminars.js"></script>',
+            ],
+        ];
+        View::render('Admin/dashboard/seminars', $data, 'admin');
+    }
 }
