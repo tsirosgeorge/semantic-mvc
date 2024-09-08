@@ -1,4 +1,8 @@
 function fetchCustomers() {
+	if ($.fn.DataTable.isDataTable("#customersTable")) {
+		$("#customersTable").DataTable().destroy();
+	}
+
 	$.ajax({
 		type: "GET",
 		url: apiUrl + "reseller/unauthorized",
@@ -38,28 +42,21 @@ function renderCustomerRows(customers) {
 		)
 		.join("");
 	$("#customersBody").html(rows);
-}
 
-function authorizeCustomer(id) {
-	$.ajax({
-		type: "POST",
-		url: `https://invoicing4all.com/reseller/ajaxSrv.php?op=authorizeCustomer&id=${id}`,
-		dataType: "json",
-		success: () => {
-			console.log("Authorization success");
-			fetchCustomers();
+	var table = $("#customersTable").DataTable({
+		order: [],
+		language: {
+			url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Greek.json",
 		},
-		error: handleAjaxError,
 	});
 }
 
 function deleteCustomer(id) {
 	$.ajax({
-		type: "POST",
-		url: `https://invoicing4all.com/reseller/ajaxSrv.php?op=deleteCustomer&id=${id}`,
+		type: "DELETE",
+		url: apiUrl + `reseller/deleteCustomer/${id}`,
 		dataType: "json",
 		success: () => {
-			console.log("Deletion success");
 			fetchCustomers();
 		},
 		error: handleAjaxError,

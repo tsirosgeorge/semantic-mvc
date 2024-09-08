@@ -55,7 +55,9 @@ class DashboardController extends Controller
             'base_url' => $_SESSION['BASE_URL'],
             'api_url' => $_SESSION['API_URL'],
             'currentPage' => 'authorized-customers',
-            'modals' => [],
+            'modals' => [
+                'Modals/Reseller/edit-customer',
+            ],
             'scripts' => [
                 '<script src="{{base_url}}assets/js/reseller/authorizedCustomers.js"></script>',
             ],

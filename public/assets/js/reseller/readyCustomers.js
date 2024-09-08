@@ -27,14 +27,14 @@ function makeLineFetchCustomers(customers) {
 		s += '<td class="text-nowrap">' + customers[i].email + "</td>";
 		$eskapBtn = "";
 		if (customers[i].eskap == 0) {
-			$eskapBtn = "<button onclick=\"registerEskap('" + customers[i].id + "', '" + customers[i].company + "', '" + customers[i].email + "', '" + customers[i].password + "', '" + customers[i].fullname + "', '" + customers[i].afm + "', '" + customers[i].address + "', '" + customers[i].postalcode + "', '" + customers[i].city + '\')" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button>';
+			$eskapBtn = "<button onclick=\"registerEskap('" + customers[i].id + "', '" + customers[i].company + "', '" + customers[i].email + "', '" + customers[i].password + "', '" + customers[i].fullname + "', '" + customers[i].afm + "', '" + customers[i].address + "', '" + customers[i].postalcode + "', '" + customers[i].city + '\')" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button>';
 		} else {
-			$eskapBtn = '<span class="badge badge-soft-success">Εγγεγραμμένος</span>';
+			$eskapBtn = '<span class="badge badge-subtle-success">Εγγεγραμμένος</span>';
 		}
 		if (customers[i].activate == 1) {
-			s += '<td class="text-nowrap"><span class="badge badge-soft-success">Ενεργοποίηση</span> | ' + $eskapBtn + "</td>";
+			s += '<td class="text-nowrap"><span class="badge badge-subtle-success">Ενεργοποίηση</span> | ' + $eskapBtn + "</td>";
 		} else {
-			s += '<td class="text-nowrap"><span class="badge badge-soft-success">Ολοκληρώθηκε</span> | ' + $eskapBtn + "</td>";
+			s += '<td class="text-nowrap"><span class="badge badge-subtle-success">Ολοκληρώθηκε</span> | ' + $eskapBtn + "</td>";
 		}
 
 		s += "</tr>";
@@ -73,13 +73,11 @@ function registerEskap($id, $company, $email, $password, $fullname, $afm, $addre
 	ar.postcode = $postalcode;
 	ar.city = $city;
 
-	console.log(ar);
-	return;
 	$.ajax({
 		type: "POST",
-		url: "https://invoicing4all.com/reseller/ajaxSrv.php?op=registerEskap",
+		url: apiUrl + "reseller/registerEskap",
 		dataType: "json",
-		data: ar,
+		data: JSON.stringify(ar),
 		success: function (result) {
 			try {
 				var message = JSON.parse(result.message);

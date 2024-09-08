@@ -43,4 +43,35 @@ class CustomersController extends Controller
         $customers = $customerModel->getReadyCustomers();
         $this->jsonResponse($customers);
     }
+
+    public function createCustomer()
+    {
+        $customerModel = new CustomersModel();
+        $data = json_decode(file_get_contents('php://input'), true);
+        $customer = $customerModel->createCustomer($data);
+        $this->jsonResponse($customer);
+    }
+
+    public function deleteCustomer($id)
+    {
+        $customerModel = new CustomersModel();
+        $data = json_decode(file_get_contents('php://input'), true);
+        $customer = $customerModel->deleteCustomer($id);
+        $this->jsonResponse($customer);
+    }
+
+    public function setSigned($id)
+    {
+        $customerModel = new CustomersModel();
+        $customer = $customerModel->setSigned($id);
+        $this->jsonResponse($customer);
+    }
+
+    public function registerEskap()
+    {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $customerModel = new CustomersModel();
+        $customer = $customerModel->registerEskap($_POST);
+        $this->jsonResponse($customer);
+    }
 }

@@ -9,14 +9,14 @@ class CustomersModel extends Model
 {
     public function getAllCustomers()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerId where 1 = ? order by customers.id desc";
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerId where 1 = ? order by customers.id desc";
         $values = ["i", 1];
         return $this->SelectSql($sql, $values);
     }
 
     public function getCustomerById($id)
     {
-        $sql = "SELECT customers.*,resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerId WHERE customers.id = ?";
+        $sql = "SELECT customers.*,users.name rfullname FROM customers left join users on users.id = customers.resellerId WHERE customers.id = ?";
         $values = ["i", $id];
         return $this->SelectSql($sql, $values);
     }
@@ -44,7 +44,7 @@ class CustomersModel extends Model
 
     public function getUnauthorizedCustomers()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerid where 1 = ? and authorized = 0 and contract = 0 and signed = 0 order by id desc";
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerid where 1 = ? and authorized = 0 and contract = 0 and signed = 0 order by id desc";
         $values = ["i", 1];
         return $this->SelectSql($sql, $values);
     }
@@ -58,21 +58,21 @@ class CustomersModel extends Model
 
     public function getAuthorizedCustomers()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerid where authorized = ? and contract = 0 and signed = 0 order by id desc";
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerid where authorized = ? and contract = 0 and signed = 0 order by id desc";
         $values = ["i", 1];
         return $this->SelectSql($sql, $values);
     }
 
     public function getCustomersAuthAndSigned()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerid where authorized = ? and contract = 0 and signed = 1 order by id desc";
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerid where authorized = ? and contract = 0 and signed = 1 order by id desc";
         $values = ["i", 1];
         return $this->SelectSql($sql, $values);
     }
 
     public function getAllButNotAactive()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerid where authorized = 1 and contract = 1 and signed = 1 and activate = ? order by id desc";
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerid where authorized = 1 and contract = 1 and signed = 1 and activate = ? order by id desc";
         $values = ["i", 0];
         return $this->SelectSql($sql, $values);
     }
@@ -86,7 +86,7 @@ class CustomersModel extends Model
 
     public function getActiveCustomers()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerid where authorized = 1 and contract = 1 and signed = 1 and activate = ? order by id desc";
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerid where authorized = 1 and contract = 1 and signed = 1 and activate = ? order by id desc";
         $values = ["i", 1];
         return $this->SelectSql($sql, $values);
     }

@@ -28,7 +28,7 @@ function makeLineFetchCustomers(customers) {
 		s += '<td class="text-nowrap">' + (customers[i].company == null ? "" : customers[i].company) + "</td>";
 		s += '<td class="text-nowrap">' + formatDateWithoutTime(customers[i].updated_at == null ? "" : customers[i].updated_at) + "</td>";
 		// s += '<td class="text-nowrap"><button onclick="window.location=\'https://invoicing4all.com/reseller/edit-customer/' + customers[i].id + '\'" class="btn btn-primary">Επεξεργασία</button></td>';
-		s += '<td class="text-nowrap"><span class="badge badge-soft-info">Αναμονή έγκρισης</span></td>';
+		s += '<td class="text-nowrap"><span class="badge badge-subtle-info">Αναμονή έγκρισης</span></td>';
 
 		s += "</tr>";
 	}

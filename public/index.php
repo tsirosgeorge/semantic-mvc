@@ -44,17 +44,17 @@ $router->group(['middleware' => 'auth'], function ($router) {
         // $router->addRoute('GET', '/dashboard', 'Admin\DashboardController@index');
         $router->addRoute('GET', '/dashboard', 'Admin\DashboardController@index', 'App\core\Middleware:admin');
 
-        $router->addRoute('GET', '/all-customers', 'Admin\DashboardController@allCustomers');
-        $router->addRoute('GET', '/unauthorized-customers', 'Admin\DashboardController@unauthorizedCustomers');
-        $router->addRoute('GET', '/customers-for-contract', 'Admin\DashboardController@customersForContract');
-        $router->addRoute('GET', '/signed-contracts', 'Admin\DashboardController@signedContracts');
-        $router->addRoute('GET', '/customers-for-register', 'Admin\DashboardController@customersForRegister');
-        $router->addRoute('GET', '/active-customers', 'Admin\DashboardController@activeCustomers');
-        $router->addRoute('GET', '/resellers', 'Admin\DashboardController@resellers');
-        $router->addRoute('GET', '/softhouses', 'Admin\DashboardController@softhouses');
-        $router->addRoute('GET', '/seminars', 'Admin\DashboardController@seminars');
+        $router->addRoute('GET', '/all-customers', 'Admin\DashboardController@allCustomers', 'App\core\Middleware:admin');
+        $router->addRoute('GET', '/unauthorized-customers', 'Admin\DashboardController@unauthorizedCustomers', 'App\core\Middleware:admin');
+        $router->addRoute('GET', '/customers-for-contract', 'Admin\DashboardController@customersForContract', 'App\core\Middleware:admin');
+        $router->addRoute('GET', '/signed-contracts', 'Admin\DashboardController@signedContracts', 'App\core\Middleware:admin');
+        $router->addRoute('GET', '/customers-for-register', 'Admin\DashboardController@customersForRegister', 'App\core\Middleware:admin');
+        $router->addRoute('GET', '/active-customers', 'Admin\DashboardController@activeCustomers', 'App\core\Middleware:admin');
+        $router->addRoute('GET', '/resellers', 'Admin\DashboardController@resellers', 'App\core\Middleware:admin');
+        $router->addRoute('GET', '/softhouses', 'Admin\DashboardController@softhouses', 'App\core\Middleware:admin');
+        $router->addRoute('GET', '/seminars', 'Admin\DashboardController@seminars', 'App\core\Middleware:admin');
 
-        $router->addRoute('GET', '/users', 'Admin\UserController@index');
+        $router->addRoute('GET', '/users', 'Admin\UserController@index', 'App\core\Middleware:admin');
     });
 
     // Softhouse routes
@@ -62,20 +62,20 @@ $router->group(['middleware' => 'auth'], function ($router) {
         // $router->addRoute('GET', '/dashboard', 'Admin\DashboardController@index');
         $router->addRoute('GET', '/dashboard', 'Softhouse\DashboardController@index', 'App\core\Middleware:softhouse');
 
-        $router->addRoute('GET', '/all-customers', 'Softhouse\DashboardController@allCustomers');
-        $router->addRoute('GET', '/unauthorized-customers', 'Softhouse\DashboardController@unauthorizedCustomers');
-        $router->addRoute('GET', '/customers-for-contract', 'Softhouse\DashboardController@customersForContract');
-        $router->addRoute('GET', '/signed-contracts', 'Softhouse\DashboardController@signedContracts');
-        $router->addRoute('GET', '/customers-for-register', 'Softhouse\DashboardController@customersForRegister');
-        $router->addRoute('GET', '/active-customers', 'Softhouse\DashboardController@activeCustomers');
-        $router->addRoute('GET', '/resellers', 'Softhouse\DashboardController@resellers');
+        $router->addRoute('GET', '/all-customers', 'Softhouse\DashboardController@allCustomers', 'App\core\Middleware:softhouse');
+        $router->addRoute('GET', '/unauthorized-customers', 'Softhouse\DashboardController@unauthorizedCustomers', 'App\core\Middleware:softhouse');
+        $router->addRoute('GET', '/customers-for-contract', 'Softhouse\DashboardController@customersForContract', 'App\core\Middleware:softhouse');
+        $router->addRoute('GET', '/signed-contracts', 'Softhouse\DashboardController@signedContracts', 'App\core\Middleware:softhouse');
+        $router->addRoute('GET', '/customers-for-register', 'Softhouse\DashboardController@customersForRegister', 'App\core\Middleware:softhouse');
+        $router->addRoute('GET', '/active-customers', 'Softhouse\DashboardController@activeCustomers', 'App\core\Middleware:softhouse');
+        $router->addRoute('GET', '/resellers', 'Softhouse\DashboardController@resellers', 'App\core\Middleware:softhouse');
 
-        $router->addRoute('GET', '/users', 'Softhouse\UserController@index');
+        $router->addRoute('GET', '/users', 'Softhouse\UserController@index', 'App\core\Middleware:softhouse');
     });
 
     // Reseller routes
     $router->group(['prefix' => '/reseller', 'role' => 'reseller'], function ($router) {
-        $router->addRoute('GET', '/dashboard', 'Reseller\DashboardController@index', 'App\core\Middleware:reseller');
+        $router->addRoute('GET', '/dashboard', 'Reseller\DashboardController@unauthorizedCustomers', 'App\core\Middleware:reseller');
         $router->addRoute('GET', '/unauthorized-customers', 'Reseller\DashboardController@unauthorizedCustomers', 'App\core\Middleware:reseller');
         $router->addRoute('GET', '/authorized-customers', 'Reseller\DashboardController@authorizedCustomers', 'App\core\Middleware:reseller');
         $router->addRoute('GET', '/customers-with-contract', 'Reseller\DashboardController@customersWithContract', 'App\core\Middleware:reseller');
@@ -175,6 +175,15 @@ $router->group(['prefix' => '/api'], function ($router) {
         $router->addRoute('GET', '/authorized', 'Api\Reseller\CustomersController@authorized');
         $router->addRoute('GET', '/customerWithContract', 'Api\Reseller\CustomersController@customerWithContract');
         $router->addRoute('GET', '/readyCustomers', 'Api\Reseller\CustomersController@readyCustomers');
+
+        $router->addRoute('POST', '/createCustomer', 'Api\Reseller\CustomersController@createCustomer');
+        $router->addRoute('DELETE', '/deleteCustomer/{id:\d+}', 'Api\Reseller\CustomersController@deleteCustomer');
+
+        $router->addRoute('POST', '/fileUpload/{id:\d+}', 'Api\Reseller\FileController@store');
+
+        $router->addRoute('PUT', '/setSigned/{id:\d+}', 'Api\Reseller\CustomersController@setSigned');
+
+        $router->addRoute('POST', '/registerEskap', 'Api\Reseller\CustomersController@registerEskap');
     });
 });
 

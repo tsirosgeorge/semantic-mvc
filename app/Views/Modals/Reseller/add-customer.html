@@ -1,14 +1,12 @@
 <div class="modal fade" id="add-customer-modal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content position-relative">
-			<div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
-				<button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+			<div class="modal-header">
+				<h1 class="modal-title fs-6" id="exampleModalLabel">Επεξεργασία</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<form class="needs-validation" novalidate="" id="customer-add-form">
 				<div class="modal-body p-0">
-					<div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-						<h4 class="mb-1" id="modalExampleDemoLabel">Προσθήκη πελάτη</h4>
-					</div>
 					<div class="p-4 pb-0">
 						<div>
 							<div class="row">
@@ -68,3 +66,219 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	function saveCustomer() {
+		var ar = {
+			cname: $("#customer-name").val(),
+			cafm: $("#customer-afm").val(),
+			cemail: $("#customer-email").val(),
+			cpass: $("#customer-pass").val(),
+			ccity: $("#customer-city").val(),
+			caddress: $("#customer-address").val(),
+			ctk: $("#customer-tk").val(),
+			ccompany: $("#customer-company").val(),
+		};
+		$.ajax({
+			type: "POST",
+			url: apiUrl + "reseller/createCustomer",
+			data: JSON.stringify(ar),
+			dataType: "json",
+			success: function (result) {
+				console.log(result);
+				if (result.message == "Customer added successfully") {
+					Swal.fire({
+						position: "center",
+						icon: "success",
+						title: "Καταχωρήθηκε με επιτυχία",
+						showConfirmButton: false,
+						timer: 1500,
+					}).then((result) => {
+						fetchCustomers();
+						$("#add-customer-modal").modal("hide");
+						$("#customer-add-form").removeClass("was-validated");
+					});
+				} else {
+					if (result.message == "Customer already exists") {
+						Swal.fire({
+							position: "center",
+							icon: "error",
+							title: "Ο πελάτης υπάρχει ήδη",
+							showConfirmButton: true,
+						}).then((result) => {
+							$("#add-customer-modal").modal("hide");
+							$("#customer-add-form").removeClass("was-validated");
+						});
+					} else {
+						Swal.fire({
+							position: "center",
+							icon: "error",
+							title: "Παρουσιάστηκε σφάλμα",
+							showConfirmButton: false,
+							timer: 1500,
+						}).then((result) => {
+							$("#add-customer-modal").modal("hide");
+							$("#customer-add-form").removeClass("was-validated");
+						});
+					}
+				}
+			},
+
+			error: function (xhr) {
+				alert("Request Status: " + xhr.status + " Status Text: " + xhr.statusText + " " + xhr.responseText);
+			},
+		});
+	}
+
+	function validateForm() {
+		// Get all elements with the 'required' attribute
+		var requiredInputs = document.querySelectorAll("[required]");
+
+		// Flag to track if any required field is empty
+		var isEmpty = false;
+
+		// Iterate through required inputs
+		requiredInputs.forEach(function (input) {
+			// Check if the input value is empty
+			if (!input.value.trim()) {
+				// If empty, set the isEmpty flag to true and add 'is-invalid' class to the input
+				isEmpty = true;
+				input.classList.add("is-invalid");
+			} else {
+				// If not empty, remove 'is-invalid' class (if it was added previously)
+				input.classList.remove("is-invalid");
+			}
+		});
+
+		// If any required field is empty, prevent form submission and show error message
+		if (isEmpty) {
+			// Show error message
+			alert("Please fill in all required fields.");
+			return false; // Prevent form submission
+		}
+
+		// If all required fields are filled, allow form submission
+		saveCustomer();
+	}
+
+	function checkVatNumber() {
+		$("#checkVatNumber").html('<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>');
+		var ar = {
+			cafm: $("#customer-afm").val(),
+		};
+		$.ajax({
+			type: "POST",
+			url: "https://invoicing4all.com/reseller/ajaxSrv.php?op=checkAFM",
+			data: ar,
+			dataType: "json",
+			success: function (result) {
+				console.log(result);
+
+				//https://www1.aade.gr/webtax/wspublicreg/faces/pages/wspublicreg/menu.xhtml
+
+				if ((result.message = "VAT number fetched successfully")) {
+					$("#checkVatNumber").html("Αναζήτηση στοιχείων με ΑΦΜ");
+					//   respone = JSON.parse(result.data.result);
+					//   let name = respone.name.split("||")[0];
+					//   $("#customer-name").val(name);
+					//   $("#customer-company").val(name);
+
+					// var addressString = respone.address;
+
+					// var parts = addressString.split(" - ");
+
+					var address = "";
+					var postalCode = "";
+					var city = "";
+					var commerTitle = "";
+					var comname = "";
+
+					if (result.data.basic.onomasia) {
+						comname = result.data.basic.onomasia;
+					}
+					if (result.data.basic.postalAddress) {
+						address += result.data.basic.postalAddress;
+						if (result.data.basic.postalAddressNo) {
+							address += " " + result.data.basic.postalAddressNo;
+						}
+					}
+					if (result.data.basic.postalAreaDescription) {
+						city = result.data.basic.postalAreaDescription;
+					}
+					if (result.data.basic.doy) {
+						idtaxoffice = result.data.basic.doy;
+					}
+					if (result.data.basic.commerTitle) {
+						commerTitle = result.data.basic.commerTitle;
+					}
+					if (result.data.basic.postalZipCode) {
+						postalCode = result.data.basic.postalZipCode;
+					}
+
+					//   if (parts.length > 1) {
+					//     var postalCodeMatch = addressString.match(/\b\d{5}\b/);
+
+					//     // Extract the postal code from the match (if found)
+					//     postalCode = postalCodeMatch ? postalCodeMatch[0] : "";
+					//     address = postalCodeMatch ? addressString.substring(0, postalCodeMatch.index).trim() : addressString.trim();
+					//     var postalCodeAndCity = parts[1].trim();
+					//     var postalCodeAndCityParts = postalCodeAndCity.split(/\s+/);
+					//     city = postalCodeAndCityParts[0];
+					//   }
+					$("#customer-company").val(comname);
+
+					//   $("#customer-name").val(commerTitle ? commerTitle : comname);
+					$("#customer-city").val(city);
+					$("#customer-address").val(address);
+					$("#customer-tk").val(postalCode);
+				} else {
+					Swal.fire({
+						position: "center",
+						icon: "error",
+						title: "Παρουσιάστηκε σφάλμα",
+						showConfirmButton: false,
+						timer: 1500,
+					}).then((result) => {
+						$("#add-customer-modal").modal("hide");
+					});
+				}
+			},
+
+			error: function (xhr) {
+				alert("Request Status: " + xhr.status + " Status Text: " + xhr.statusText + " " + xhr.responseText);
+			},
+		});
+	}
+
+	document.addEventListener("DOMContentLoaded", function () {
+		var checkVatNumberButton = document.getElementById("checkVatNumber");
+		if (checkVatNumberButton) {
+			checkVatNumberButton.addEventListener("click", checkVatNumber);
+		}
+
+		var form = document.getElementById("customer-add-form");
+		if (form) {
+			form.addEventListener("submit", function (event) {
+				event.preventDefault();
+
+				if (form.checkValidity()) {
+					saveCustomer();
+					$(this)[0].reset();
+				} else {
+				}
+			});
+		}
+	});
+
+	document.getElementById("customer-afm").addEventListener("keypress", function (event) {
+		// Prevent space character
+		if (event.key === " ") {
+			event.preventDefault();
+		}
+	});
+
+	document.getElementById("customer-afm").addEventListener("input", function (event) {
+		// Limit to 9 characters and remove any spaces
+		this.value = this.value.replace(/\s/g, "").slice(0, 9);
+	});
+</script>
