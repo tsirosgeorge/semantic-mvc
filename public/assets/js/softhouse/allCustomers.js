@@ -38,10 +38,10 @@ function makeLineFetchCustomers(customers) {
 		}
 
 		s += `<tr style="cursor:pointer;" class="align-middle">`;
-		s += `<td class="text-nowrap afm-excel" onclick="window.location='${editUrl}'">${customer.afm || ""}</td>`;
-		s += `<td class="text-nowrap text-ellipsis" onclick="window.location='${editUrl}'">${truncateString(customer.company || "", 40)}</td>`;
+		s += `<td class="text-nowrap afm-excel text-start">${customer.afm || ""}</td>`;
+		s += `<td class="text-nowrap text-ellipsis">${truncateString(customer.company || "", 40)}</td>`;
 		s += `<td class="text-nowrap">${customer.rfullname || ""}</td>`;
-		s += `<td class="text-nowrap date-excel" onclick="window.location='${editUrl}'">${formatDateWithoutTime(customer.created_at || "")}</td>`;
+		s += `<td class="text-nowrap date-excel">${formatDateWithoutTime(customer.created_at || "")}</td>`;
 		s += `<td class="text-nowrap text-end"><button onclick="editCustomer(${customerId})" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></td>`;
 		s += `</tr>`;
 	}

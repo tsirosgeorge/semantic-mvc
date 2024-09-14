@@ -52,7 +52,7 @@ function renderCustomers(customers) {
 
 			return `
             <tr style="cursor:pointer;" class="align-middle">
-                <td class="text-nowrap afm-excel">${afm}</td>
+                <td class="text-nowrap afm-excel text-start">${afm}</td>
                 <td class="text-nowrap text-ellipsis">${company}</td>
                 <td class="text-nowrap">${rfullname}</td>
                 <td class="text-nowrap date-excel">${createdAt}</td>

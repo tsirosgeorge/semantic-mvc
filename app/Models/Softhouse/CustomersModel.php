@@ -9,15 +9,15 @@ class CustomersModel extends Model
 {
     public function getAllCustomers()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerId where 1 = ? order by customers.id desc";
-        $values = ["i", 1];
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerId  where users.parent_id = ? order by customers.id desc";
+        $values = ["i", $_SESSION["user_id"]];
         return $this->SelectSql($sql, $values);
     }
 
     public function getCustomerById($id)
     {
-        $sql = "SELECT customers.*,resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerId WHERE customers.id = ?";
-        $values = ["i", $id];
+        $sql = "SELECT customers.*,users.name rfullname FROM customers left join users on users.id = customers.resellerId WHERE customers.id = ? and users.parent_id = ?";
+        $values = ["ii", $id, $_SESSION["user_id"]];
         return $this->SelectSql($sql, $values);
     }
 
@@ -44,8 +44,8 @@ class CustomersModel extends Model
 
     public function getUnauthorizedCustomers()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerid where 1 = ? and authorized = 0 and contract = 0 and signed = 0 order by id desc";
-        $values = ["i", 1];
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerid where users.parent_id = ? and authorized = 0 and contract = 0 and signed = 0 order by id desc";
+        $values = ["i", $_SESSION["user_id"]];
         return $this->SelectSql($sql, $values);
     }
 
@@ -58,22 +58,22 @@ class CustomersModel extends Model
 
     public function getAuthorizedCustomers()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerid where authorized = ? and contract = 0 and signed = 0 order by id desc";
-        $values = ["i", 1];
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerid where users.parent_id = ? and authorized = 1 and contract = 0 and signed = 0 order by id desc";
+        $values = ["i", $_SESSION["user_id"]];
         return $this->SelectSql($sql, $values);
     }
 
     public function getCustomersAuthAndSigned()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerid where authorized = ? and contract = 0 and signed = 1 order by id desc";
-        $values = ["i", 1];
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerid where users.parent_id = ? and authorized = 1 and contract = 0 and signed = 1 order by id desc";
+        $values = ["i", $_SESSION["user_id"]];
         return $this->SelectSql($sql, $values);
     }
 
     public function getAllButNotAactive()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerid where authorized = 1 and contract = 1 and signed = 1 and activate = ? order by id desc";
-        $values = ["i", 0];
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerid where authorized = 1 and contract = 1 and signed = 1 and activate = 0 and users.parent_id = ? order by id desc";
+        $values = ["i", $_SESSION["user_id"]];
         return $this->SelectSql($sql, $values);
     }
 
@@ -86,8 +86,8 @@ class CustomersModel extends Model
 
     public function getActiveCustomers()
     {
-        $sql = "SELECT customers.*, resellers.fullname rfullname FROM customers left join resellers on resellers.id = customers.resellerid where authorized = 1 and contract = 1 and signed = 1 and activate = ? order by id desc";
-        $values = ["i", 1];
+        $sql = "SELECT customers.*, users.name rfullname FROM customers left join users on users.id = customers.resellerid where authorized = 1 and contract = 1 and signed = 1 and activate = 1 and users.parent_id = ? order by id desc";
+        $values = ["i", $_SESSION["user_id"]];
         return $this->SelectSql($sql, $values);
     }
 
@@ -101,5 +101,13 @@ class CustomersModel extends Model
         $totalCustomersPerReseller = $this->SelectSql($sql2, $values2);
 
         return ['resellers' => $resellers, 'totalCustomersPerReseller' => $totalCustomersPerReseller];
+    }
+
+    public function setContract($id, $data)
+    {
+
+        $sql = "UPDATE customers SET contract = ? WHERE id = ?";
+        $values = ["ii", $data['contract'], $id];
+        return $this->executeSql($sql, $values);
     }
 }

@@ -33,7 +33,7 @@ function renderCustomerRows(customers) {
 			}
 			return `
             <tr style="cursor:pointer;" class="align-middle">
-                <td class="text-nowrap afm-excel">${customer.afm || ""}</td>
+                <td class="text-nowrap afm-excel text-start">${customer.afm || ""}</td>
                 <td class="text-nowrap text-ellipsis">${truncateString(customer.company || "", 40)}</td>
                 <td class="text-nowrap">${customer.rfullname || ""}</td>
                 <td class="text-nowrap date-excel">${formatDateWithoutTime(customer.created_at || "")}</td>

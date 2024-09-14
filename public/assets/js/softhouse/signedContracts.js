@@ -32,7 +32,7 @@ function makeLineFetchCustomers(customers) {
 		}
 
 		s += '<tr style="cursor:pointer;" class="align-middle">';
-		s += '<td class="text-nowrap afm-excel">' + (customers[i].afm == null ? "" : customers[i].afm) + "</td>";
+		s += '<td class="text-nowrap afm-excel text-start">' + (customers[i].afm == null ? "" : customers[i].afm) + "</td>";
 		s += '<td class="text-nowrap text-ellipsis">' + truncateString(customers[i].company == null ? "" : customers[i].company, 40) + "</td>";
 		s += '<td class="text-nowrap">' + (customers[i].rfullname == null ? "" : customers[i].rfullname) + "</td>";
 
@@ -105,10 +105,12 @@ function openContractModal($id, $afm) {
 }
 
 function setContract($id, $set) {
+	var ar = {};
+	ar.contract = $set;
 	$.ajax({
 		type: "POST",
-		url: apiUrl + "ajaxSrv.php?op=setContract&id=" + $id,
-		data: { set: $set },
+		url: apiUrl + "softhouse/setContract/" + $id,
+		data: JSON.stringify(ar),
 		dataType: "json",
 		success: function (result) {
 			fetchCustomers();

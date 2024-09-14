@@ -25,7 +25,7 @@ class DashboardController extends Controller
                 '<script src="{{base_url}}assets/js/scripts/dashboard.js"></script>',
             ],
         ];
-        View::render('Softhouse/dashboard/dashboard', $data, 'admin');
+        View::render('Softhouse/dashboard/dashboard', $data, 'softhouse');
     }
 
     public function allCustomers()

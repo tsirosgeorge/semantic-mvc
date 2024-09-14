@@ -1,0 +1,57 @@
+<div class="modal fade" id="editCustomer" tabindex="-1" aria-labelledby="editCustomer" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-6" id="exampleModalLabel">Επεξεργασία</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<input id="customerIdModal" hidden />
+				<div class="row g-3">
+					<div class="col-md-6">
+						<label for="inputEmail4" class="form-label">Email</label>
+						<input type="email" class="form-control" id="emailModal" />
+					</div>
+					<div class="col-md-6">
+						<label for="inputPassword4" class="form-label">Password</label>
+						<input type="text" class="form-control" id="passModal" />
+					</div>
+				</div>
+				<div class="row g-3">
+					<div class="col-md-6">
+						<label for="inputEmail4" class="form-label">Α.Φ.Μ</label>
+						<input type="email" class="form-control" id="afmModal" />
+					</div>
+					<div class="col-md-6">
+						<label for="inputPassword4" class="form-label">Πόλη</label>
+						<input type="text" class="form-control" id="cityModal" />
+					</div>
+				</div>
+				<div class="row g-3">
+					<div class="col-md-6">
+						<label for="inputEmail4" class="form-label">Διεύθυνση</label>
+						<input type="email" class="form-control" id="addressModal" />
+					</div>
+					<div class="col-md-6">
+						<label for="inputPassword4" class="form-label">Τ.Κ</label>
+						<input type="text" class="form-control" id="postalcodeModal" />
+					</div>
+				</div>
+				<div class="row g-3">
+					<div class="col-md-6">
+						<label for="inputEmail4" class="form-label">Επωνυμία</label>
+						<input type="email" class="form-control" id="companyModal" />
+					</div>
+					<div class="col-md-6">
+						<label for="inputPassword4" class="form-label">Μεταπωλητής</label>
+						<input type="text" class="form-control" disabled id="resellerModal" />
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Κλείσιμο</button>
+				<button type="button" class="btn btn-primary" onclick="saveCustomer()">Αποθήκευση</button>
+			</div>
+		</div>
+	</div>
+</div>

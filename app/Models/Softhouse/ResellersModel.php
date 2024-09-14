@@ -9,8 +9,8 @@ class ResellersModel extends Model
     // Retrieves a user by email and decrypts the password
     public function getAllResellers()
     {
-        $sql = "SELECT * FROM resellers where 1 = ? order by id desc";
-        $values = ["i", 1];
+        $sql = "SELECT * FROM users where parent_id = ? order by id desc";
+        $values = ["i", $_SESSION["user_id"]];
         $resellers = $this->SelectSql($sql, $values);
         $sql2 = "SELECT resellerid, COUNT(*) AS customer_count FROM customers where 1 = ? GROUP BY resellerid";
         $values2 = ["i", 1];
