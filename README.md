@@ -7,7 +7,7 @@ Welcome to the Semantic MVC Framework! This project is a custom MVC framework us
 To install the Semantic MVC Framework, use Composer:
 
 ```bash
-composer require tsirosgeorge/semantic
+composer create-project tsirosgeorge/semantic
 ```
 
 ## How to Use
